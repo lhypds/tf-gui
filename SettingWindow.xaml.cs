@@ -22,10 +22,10 @@ namespace TfGuiTool
         public SettingWindow()
         {
             InitializeComponent();
-            textBoxTfPath.Text = SampleConfigUtils.GetConfig("tf_executable_path");
-            textBoxCollectionUrl.Text = SampleConfigUtils.GetConfig("collection_url");
-            textBoxWorkspace.Text = SampleConfigUtils.GetConfig("workspace");
-            textBoxProjectPath.Text = SampleConfigUtils.GetConfig("project_path");
+            textBoxTfPath.Text = SimpleConfigUtils.GetConfig("tf_executable_path");
+            textBoxCollectionUrl.Text = SimpleConfigUtils.GetConfig("collection_url");
+            textBoxWorkspace.Text = SimpleConfigUtils.GetConfig("workspace");
+            textBoxProjectPath.Text = SimpleConfigUtils.GetConfig("project_path");
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)

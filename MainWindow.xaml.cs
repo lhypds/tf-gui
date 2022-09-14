@@ -66,9 +66,9 @@ namespace TfGuiTool
             int undoCounter = 0;
             foreach (var file in FileList)
             {
-                string cmd = SampleConfigUtils.GetConfig("tf_executable_path") + " undo "
-                + "/collection:" + SampleConfigUtils.GetConfig("collection_url") + " "
-                + "/workspace:" + SampleConfigUtils.GetConfig("workspace") + " ";
+                string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " undo "
+                + "/collection:" + SimpleConfigUtils.GetConfig("collection_url") + " "
+                + "/workspace:" + SimpleConfigUtils.GetConfig("workspace") + " ";
                 cmd += file.Path;
                 CommandUtils.Run(cmd, out string output);
                 Debug.WriteLine(output);
@@ -86,7 +86,7 @@ namespace TfGuiTool
             int checkoutCounter = 0;
             foreach (var file in FileList)
             {
-                string cmd = SampleConfigUtils.GetConfig("tf_executable_path") + " checkout ";
+                string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " checkout ";
                 cmd += file.Path;
                 CommandUtils.Run(cmd, out string output);
                 Debug.WriteLine(output);
@@ -99,9 +99,9 @@ namespace TfGuiTool
 
         private void buttonChanges_Click(object sender, RoutedEventArgs e)
         {
-            string cmd = SampleConfigUtils.GetConfig("tf_executable_path") + " stat "
-                + "/collection:" + SampleConfigUtils.GetConfig("collection_url") + " "
-                + "/workspace:" + SampleConfigUtils.GetConfig("workspace");
+            string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " stat "
+                + "/collection:" + SimpleConfigUtils.GetConfig("collection_url") + " "
+                + "/workspace:" + SimpleConfigUtils.GetConfig("workspace");
             CommandUtils.Run(cmd, out string output);
             Debug.WriteLine(output);
 
@@ -155,7 +155,7 @@ namespace TfGuiTool
 
         public override string ToString()
         {
-            return this.Name + " | " + Path.Replace(SampleConfigUtils.GetConfig("project_path"), "");
+            return this.Name + " | " + Path.Replace(SimpleConfigUtils.GetConfig("project_path"), "");
         }
     }
 }

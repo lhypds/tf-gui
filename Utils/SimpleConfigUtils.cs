@@ -7,7 +7,7 @@ using System.Text;
 
 namespace TfGuiTool.Utils
 {
-    internal class SampleConfigUtils
+    internal class SimpleConfigUtils
     {
         const string CONFIG = "config.txt";
         const string SPLITER = ",";

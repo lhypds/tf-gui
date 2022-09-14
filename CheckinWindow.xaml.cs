@@ -29,7 +29,7 @@ namespace TfGuiTool
 
         private void buttonCheckin_Click(object sender, RoutedEventArgs e)
         {
-            string cmd = SampleConfigUtils.GetConfig("tf_executable_path") + " checkin ";
+            string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " checkin ";
             foreach (var file in FileList)
             {
                 cmd += file.Path + " ";

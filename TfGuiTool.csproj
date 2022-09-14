@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <None Remove="gear.ico" />
+    <None Remove="Resources\door.ico" />
     <None Remove="Resources\tfs.ico" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\door.ico" />
     <Resource Include="Resources\gear.ico" />
     <Resource Include="Resources\tfs.ico" />
   </ItemGroup>

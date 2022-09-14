@@ -133,7 +133,9 @@ namespace TfGuiTool
 
         private void buttonCheckin_Click(object sender, RoutedEventArgs e)
         {
-
+            CheckinWindow checkinWindow = new CheckinWindow();
+            checkinWindow.Owner = this;
+            checkinWindow.ShowDialog();
         }
     }
 

@@ -133,6 +133,11 @@ namespace TfGuiTool
 
         private void buttonCheckin_Click(object sender, RoutedEventArgs e)
         {
+            if (FileList.Count == 0)
+            {
+                labelStatus.Text = "File list empty.";
+                return;
+            }
             CheckinWindow checkinWindow = new CheckinWindow();
             checkinWindow.Owner = this;
             checkinWindow.ShowDialog();

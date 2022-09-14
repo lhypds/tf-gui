@@ -4,12 +4,17 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\tfs.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="gear.ico" />
     <None Remove="Resources\door.ico" />
     <None Remove="Resources\tfs.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\tfs.ico" />
   </ItemGroup>
 
   <ItemGroup>

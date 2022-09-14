@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -24,13 +25,7 @@ namespace TfGuiTool
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<FileItem> _FileList = new List<FileItem>();
-
-        public List<FileItem> FileList
-        { 
-            get { return _FileList; } 
-            set { _FileList = value; }
-        }
+        private List<FileItem> FileList = new List<FileItem>();
         
         private FileItem _SelectedFile;
 
@@ -42,7 +37,7 @@ namespace TfGuiTool
             buttonCheckout.ToolTip = "buttonCheckout";
             buttonUndoAll.ToolTip = "buttonUndoAll";
 
-            _FileList.Add(new FileItem() { Name = "test", Path = "Path" });
+            FileList.Add(new FileItem() { Name = "test", Path = "Path" });
             listViewFiles.ItemsSource = FileList;
         }
 
@@ -58,59 +53,28 @@ namespace TfGuiTool
             string[] filePathList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var filePath in filePathList)
             {
-                if (_FileList.Find(f => f.Path == filePath) == null)
+                if (FileList.Find(f => f.Path == filePath) == null)
                 {
-                    _FileList.Add(new FileItem()
+                    FileList.Add(new FileItem()
                     {
                         Name = System.IO.Path.GetFileName(filePath),
                         Path = filePath
                     });
+                    labelStatus.Text = "File(s) added.";
                 }
             }
-            labelStatus.Text = "File list updated.";
         }
     }
 
-    public class FileItem : INotifyPropertyChanged
+    public class FileItem
     {
-        private string _Name;
+        public string Name;
 
-        public string Name
-        {
-            get {return _Name;  }
-            set
-            {
-                _Name = value;
-                OnPropertyChanged("Name");
-            }
-        }
-
-        private string _Path;
-
-        public string Path
-        {
-            get { return _Path; }
-            set
-            {
-                _Path = value;
-                OnPropertyChanged("Path");
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(String propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+        public string Path;
 
         public override string ToString()
         {
-            return this.Name.ToString() + " path:" + this.Path.ToString();
+            return this.Name + ", " + Path;
         }
     }
 }

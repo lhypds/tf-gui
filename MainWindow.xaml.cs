@@ -111,6 +111,7 @@ namespace TfGuiTool
             }
 
             int fileChangeCounter = 0;
+            FileList.Clear();
             for (int i = 3; i < lines.Count; i++)
             {
                 string line = lines[i];

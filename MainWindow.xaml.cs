@@ -114,7 +114,7 @@ namespace TfGuiTool
 
         public override string ToString()
         {
-            return this.Name + ", " + Path.Replace(SampleConfigUtils.GetConfig("project_path"), "");
+            return this.Name + " | " + Path.Replace(SampleConfigUtils.GetConfig("project_path"), "");
         }
     }
 }

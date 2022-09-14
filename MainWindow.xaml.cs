@@ -141,7 +141,7 @@ namespace TfGuiTool
                 labelStatus.Text = "File list empty.";
                 return;
             }
-            CheckinWindow checkinWindow = new CheckinWindow();
+            CheckinWindow checkinWindow = new CheckinWindow(FileList);
             checkinWindow.Owner = this;
             checkinWindow.ShowDialog();
         }

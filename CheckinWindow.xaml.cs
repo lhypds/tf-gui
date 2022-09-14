@@ -19,17 +19,23 @@ namespace TfGuiTool
     /// </summary>
     public partial class CheckinWindow : Window
     {
-        public CheckinWindow()
+        List<FileItem> FileList = new List<FileItem>();
+
+        public CheckinWindow(List<FileItem> fileList)
         {
             InitializeComponent();
+            FileList = fileList;
         }
 
         private void buttonCheckin_Click(object sender, RoutedEventArgs e)
         {
-            string cmd = SampleConfigUtils.GetConfig("tf_executable_path") + " checkin "
-                + "/comment:\"" + textBoxComment.Text.ToString() + "\" "
-                + "/collection:" + SampleConfigUtils.GetConfig("collection_url") + " "
-                + "/workspace:" + SampleConfigUtils.GetConfig("workspace");
+            string cmd = SampleConfigUtils.GetConfig("tf_executable_path") + " checkin ";
+            foreach (var file in FileList)
+            {
+                cmd += file.Path + " ";
+            }
+            cmd += "/comment:\"" + textBoxComment.Text.ToString() + "\" "
+                + "/noprompt";
             CommandUtils.Run(cmd, out string output);
             Debug.WriteLine(output);
             Close();

@@ -76,6 +76,8 @@ namespace TfGuiTool
                 if (output.Contains("Undoing edit"))
                     undoCounter++;
             }
+            FileList.Clear();
+            listViewFiles.Items.Refresh();
             labelStatus.Text = undoCounter + " file(s) undo.";
         }
 

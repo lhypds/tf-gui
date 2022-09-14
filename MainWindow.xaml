@@ -1,12 +1,33 @@
-﻿<Window x:Class="TfGuiTool.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TfGuiTool"
+        xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System.Collections.Specialized" x:Class="TfGuiTool.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TF GUI Tool 1.0.0" Height="320" Width="510" Icon="/Resources/tfs.ico">
     <Grid>
-
+        <Button x:Name="buttonSettings" Content="Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="buttonSettings_Click" Height="27" Width="72"/>
+        <ListView x:Name="listViewFiles" Margin="10,42,10,71" Drop="listViewFiles_Drop" AllowDrop="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}" />
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{Binding Path}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button x:Name="buttonUndoAll" Content="Undo All" HorizontalAlignment="Left" Margin="10,0,0,39" VerticalAlignment="Bottom" Height="27" Width="72"/>
+        <Button x:Name="buttonCheckout" Content="Checkout" HorizontalAlignment="Left" Margin="87,0,0,39" Width="72" Height="27" VerticalAlignment="Bottom"/>
+        <Button x:Name="buttonChanges" Content="Changes" Margin="0,0,87,39" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="72"/>
+        <Button x:Name="buttonCheckin" Content="Checkin" Margin="0,0,10,39" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="72"/>
+        <StatusBar Height="20" VerticalAlignment="Bottom">
+            <StatusBarItem FontSize="11">
+                <TextBlock Name="labelStatus" />
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>

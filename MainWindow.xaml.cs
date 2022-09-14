@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,6 +60,50 @@ namespace TfGuiTool
             }
             listViewFiles.Items.Refresh();
         }
+
+        private void buttonUndoAll_Click(object sender, RoutedEventArgs e)
+        {
+            int undoCounter = 0;
+            foreach (var file in FileList)
+            {
+                string cmd = SampleConfigUtils.GetConfig("tf_executable_path") + " undo "
+                + "/collection:" + SampleConfigUtils.GetConfig("collection_url") + " "
+                + "/workspace:" + SampleConfigUtils.GetConfig("workspace") + " ";
+                cmd += file.Path;
+                CommandUtils.Run(cmd, out string output);
+                Debug.WriteLine(output);
+
+                if (output.Contains("Undoing edit"))
+                    undoCounter++;
+            }
+            labelStatus.Text = undoCounter + " file(s) undo.";
+        }
+
+        private void buttonCheckout_Click(object sender, RoutedEventArgs e)
+        {
+            int checkoutCounter = 0;
+            foreach (var file in FileList)
+            {
+                string cmd = SampleConfigUtils.GetConfig("tf_executable_path") + " checkout ";
+                cmd += file.Path;
+                CommandUtils.Run(cmd, out string output);
+                Debug.WriteLine(output);
+
+                if (output.Contains(file.Name))
+                    checkoutCounter++;
+            }
+            labelStatus.Text = checkoutCounter + " file(s) checkout.";
+        }
+
+        private void buttonChanges_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonCheckin_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
     public class FileItem
@@ -69,7 +114,7 @@ namespace TfGuiTool
 
         public override string ToString()
         {
-            return this.Name + ", " + Path;
+            return this.Name + ", " + Path.Replace(SampleConfigUtils.GetConfig("project_path"), "");
         }
     }
 }

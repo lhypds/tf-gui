@@ -97,7 +97,38 @@ namespace TfGuiTool
 
         private void buttonChanges_Click(object sender, RoutedEventArgs e)
         {
+            string cmd = SampleConfigUtils.GetConfig("tf_executable_path") + " stat "
+                + "/collection:" + SampleConfigUtils.GetConfig("collection_url") + " "
+                + "/workspace:" + SampleConfigUtils.GetConfig("workspace");
+            CommandUtils.Run(cmd, out string output);
+            Debug.WriteLine(output);
 
+            List<string> lines = output.Split("\r\n").ToList();
+            if (lines[0].Contains("There are no pending changes."))
+            {
+                labelStatus.Text = "No changes detected.";
+                return;
+            }
+
+            int fileChangeCounter = 0;
+            for (int i = 3; i < lines.Count; i++)
+            {
+                string line = lines[i];
+                if (!line.Contains(" ! edit ")) continue;
+
+                List<string> buffer = line.Split(" ! edit ").ToList();
+                string name = buffer[0].Trim();
+                string path = buffer[1].Trim();
+                FileList.Add(new FileItem()
+                {
+                    Name = name,
+                    Path = path,
+                });
+
+                fileChangeCounter++;
+                listViewFiles.Items.Refresh();
+            }
+            labelStatus.Text = fileChangeCounter + " file(s) changes detected.";
         }
 
         private void buttonCheckin_Click(object sender, RoutedEventArgs e)

@@ -32,12 +32,6 @@ namespace TfGuiTool
         public MainWindow()
         {
             InitializeComponent();
-            buttonChanges.ToolTip = "buttonChanges";
-            buttonCheckin.ToolTip = "buttonCheckin";
-            buttonCheckout.ToolTip = "buttonCheckout";
-            buttonUndoAll.ToolTip = "buttonUndoAll";
-
-            FileList.Add(new FileItem() { Name = "test", Path = "Path" });
             listViewFiles.ItemsSource = FileList;
         }
 
@@ -63,6 +57,7 @@ namespace TfGuiTool
                     labelStatus.Text = "File(s) added.";
                 }
             }
+            listViewFiles.Items.Refresh();
         }
     }
 

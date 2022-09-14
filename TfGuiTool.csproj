@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Resources\tfs.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Resources\door.ico" />
     <Resource Include="Resources\gear.ico" />
     <Resource Include="Resources\tfs.ico" />

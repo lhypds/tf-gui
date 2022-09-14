@@ -2,7 +2,7 @@
 TF GUI Tool
 ===========
 
-Update Team Fundation Server files without start Visual Studio.
+Version control with Team Fundation Server without start Visual Studio.
 
 TF.exe Path Example:  
 `"C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\TF.exe" `

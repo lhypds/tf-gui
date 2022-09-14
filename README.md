@@ -4,7 +4,7 @@ TF GUI Tool
 
 Version control with Team Fundation Server without starting Visual Studio.
 
-* How to use
+* How To Use  
 Drag and drop file(s) to the file list or load changes, then you have it.
 
 TF.exe Path Example:  

@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,13 @@ namespace TfGuiTool
 
         private void buttonSettings_Click(object sender, RoutedEventArgs e)
         {
+            if (Keyboard.Modifiers == ModifierKeys.Control) 
+            {
+                if (File.Exists("config.txt"))
+                    Process.Start("notepad.exe", "config.txt");
+                return;
+            }
+
             SettingWindow settingWindow = new SettingWindow();
             settingWindow.Owner = this;
             settingWindow.ShowDialog();
@@ -63,6 +71,7 @@ namespace TfGuiTool
 
         private void buttonUndoAll_Click(object sender, RoutedEventArgs e)
         {
+            if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             int undoCounter = 0;
             foreach (var file in FileList)
             {
@@ -84,6 +93,7 @@ namespace TfGuiTool
 
         private void buttonCheckout_Click(object sender, RoutedEventArgs e)
         {
+            if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             int checkoutCounter = 0;
             foreach (var file in FileList)
             {
@@ -101,6 +111,7 @@ namespace TfGuiTool
 
         private void buttonChanges_Click(object sender, RoutedEventArgs e)
         {
+            if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " stat "
                 + "/collection:" + SimpleConfigUtils.GetConfig("collection_url") + " "
                 + "/workspace:" + SimpleConfigUtils.GetConfig("workspace") + " "
@@ -139,6 +150,7 @@ namespace TfGuiTool
 
         private void buttonCheckin_Click(object sender, RoutedEventArgs e)
         {
+            if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             if (FileList.Count == 0)
             {
                 labelStatus.Text = "File list empty.";

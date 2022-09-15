@@ -11,6 +11,15 @@ namespace TfGuiTool.Utils
     {
         const string CONFIG = "config.txt";
         const string SPLITER = ",";
+        static readonly List<string> ConfigStrings = new List<string>
+        {
+            "tf_executable_path",
+            "collection_url",
+            "workspace",
+            "user_name",
+            "password",
+            "project_path",
+        };
 
         public static StringDictionary ReadConfigs()
         {
@@ -33,6 +42,15 @@ namespace TfGuiTool.Utils
         public static string GetConfig(string key)
         {
             return ReadConfigs()[key];
+        }
+
+        public static bool ConfigVerification()
+        {
+            foreach (var configString in ConfigStrings)
+            {
+                if (string.IsNullOrEmpty(GetConfig(configString))) return false;
+            }
+            return true;
         }
     }
 }

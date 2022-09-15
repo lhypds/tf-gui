@@ -145,8 +145,6 @@ namespace TfGuiTool
         {
             Status("Loading changes...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
-            FileList.Clear();
-            listViewFiles.Items.Refresh();
 
             new Thread(() =>
             {
@@ -168,6 +166,7 @@ namespace TfGuiTool
                 }
 
                 int fileChangeCounter = 0;
+                List<FileItem> fileList = new List<FileItem>();
                 for (int i = 3; i < lines.Count; i++)
                 {
                     string line = lines[i];
@@ -176,13 +175,14 @@ namespace TfGuiTool
                     List<string> buffer = line.Split(" ! edit ").ToList();
                     string name = buffer[0].Trim();
                     string path = buffer[1].Trim();
-                    FileList.Add(new FileItem()
+                    fileList.Add(new FileItem()
                     {
                         Name = name,
                         Path = path,
                     });
                     fileChangeCounter++;
                 }
+                FileList = fileList;
                 Status(fileChangeCounter + " file(s) pending changes detected.");
             }).Start();
         }

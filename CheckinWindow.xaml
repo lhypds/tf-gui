@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TfGuiTool"
         mc:Ignorable="d"
-        Title="Check-in changes" Height="158" Width="303" ResizeMode="NoResize" Icon="/Resources/door.ico">
+        Title="Check-in changes" Height="158" Width="303" ResizeMode="NoResize" Icon="/Resources/door.ico"
+        WindowStartupLocation="CenterOwner">
     <Grid>
         <Label x:Name="labelComment" Content="Enter a check-in comment:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="textBoxComment" Margin="10,36,10,39" TextWrapping="Wrap"/>

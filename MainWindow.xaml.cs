@@ -56,6 +56,12 @@ namespace TfGuiTool
             string[] filePathList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var filePath in filePathList)
             {
+                if (!filePath.Contains(SimpleConfigUtils.GetConfig("project_path")))
+                {
+                    Status("File not in project path.");
+                    return;
+                }
+
                 if (FileList.Find(f => f.Path == filePath) == null)
                 {
                     FileList.Add(new FileItem()

@@ -29,8 +29,20 @@ namespace TfGuiTool
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<FileItem> FileList = new List<FileItem>();
-        
+        private List<FileItem> _FileList = new List<FileItem>();
+
+        private List<FileItem> FileList
+        {
+            get { return _FileList; }
+            set { 
+                _FileList = value;
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    listViewFiles.Items.Refresh();
+                }));
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -169,11 +181,6 @@ namespace TfGuiTool
                         Path = path,
                     });
                     fileChangeCounter++;
-
-                    Dispatcher.BeginInvoke(new Action(() =>
-                    {
-                        listViewFiles.Items.Refresh();
-                    }));
                 }
                 Status(fileChangeCounter + " file(s) pending changes detected.");
             }).Start();

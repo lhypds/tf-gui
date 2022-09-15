@@ -95,7 +95,7 @@ namespace TfGuiTool
                 }
                 
                 Status(undoCounter + " file(s) undo.");
-                Thread.Sleep(1000);  // avoid too fast
+                Thread.Sleep(600);  // avoid too fast
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     buttonChanges_Click(null, null);

@@ -62,5 +62,14 @@ namespace TfGuiTool
                 }));
             }).Start();
         }
+
+        private void textBoxComment_KeyUp(object sender, KeyEventArgs e)
+        {
+            // Ctrl enter to checkin
+            if (e.Key == Key.Enter && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                buttonCheckin_Click(null, null);
+            }
+        }
     }
 }

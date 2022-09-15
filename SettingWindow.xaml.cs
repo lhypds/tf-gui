@@ -22,12 +22,12 @@ namespace TfGuiTool
         public SettingWindow()
         {
             InitializeComponent();
-            textBoxTfPath.Text = SampleConfigUtils.GetConfig("tf_executable_path");
-            textBoxCollectionUrl.Text = SampleConfigUtils.GetConfig("collection_url");
-            textBoxWorkspace.Text = SampleConfigUtils.GetConfig("workspace");
-            textBoxUserName.Text = SampleConfigUtils.GetConfig("user_name");
-            textBoxPassword.Text = SampleConfigUtils.GetConfig("password");
-            textBoxProjectPath.Text = SampleConfigUtils.GetConfig("project_path");
+            textBoxTfPath.Text = SimpleConfigUtils.GetConfig("tf_executable_path");
+            textBoxCollectionUrl.Text = SimpleConfigUtils.GetConfig("collection_url");
+            textBoxWorkspace.Text = SimpleConfigUtils.GetConfig("workspace");
+            textBoxUserName.Text = SimpleConfigUtils.GetConfig("user_name");
+            textBoxPassword.Text = SimpleConfigUtils.GetConfig("password");
+            textBoxProjectPath.Text = SimpleConfigUtils.GetConfig("project_path");
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)

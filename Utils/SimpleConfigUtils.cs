@@ -7,21 +7,24 @@ using System.Text;
 
 namespace TfGuiTool.Utils
 {
-    internal class SampleConfigUtils
+    internal class SimpleConfigUtils
     {
         const string CONFIG = "config.txt";
         const string SPLITER = ",";
 
         public static StringDictionary ReadConfigs()
         {
-            List<string> configStrings = File.ReadAllLines(CONFIG).ToList();
             StringDictionary configs = new StringDictionary();
-            foreach (var configString in configStrings)
+            if (File.Exists(CONFIG))
             {
-                if (configString.Contains(SPLITER))
+                List<string> configStrings = File.ReadAllLines(CONFIG).ToList();
+                foreach (var configString in configStrings)
                 {
-                    List<string> configKeyValue = configString.Split(SPLITER).ToList();
-                    configs.Add(configKeyValue[0], configKeyValue[1]);
+                    if (configString.Contains(SPLITER))
+                    {
+                        List<string> configKeyValue = configString.Split(SPLITER).ToList();
+                        configs.Add(configKeyValue[0], configKeyValue[1]);
+                    }
                 }
             }
             return configs;

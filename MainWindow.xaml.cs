@@ -114,6 +114,9 @@ namespace TfGuiTool
         private void buttonChanges_Click(object sender, RoutedEventArgs e)
         {
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+            FileList.Clear();
+            listViewFiles.Items.Refresh();
+
             string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " stat "
                 + "/collection:" + SimpleConfigUtils.GetConfig("collection_url") + " "
                 + "/workspace:" + SimpleConfigUtils.GetConfig("workspace") + " "
@@ -129,8 +132,6 @@ namespace TfGuiTool
             }
 
             int fileChangeCounter = 0;
-            FileList.Clear();
-            listViewFiles.Items.Refresh();
             for (int i = 3; i < lines.Count; i++)
             {
                 string line = lines[i];

@@ -72,6 +72,7 @@ namespace TfGuiTool
         private void buttonUndoAll_Click(object sender, RoutedEventArgs e)
         {
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+            if (listViewFiles.Items.Count == 0) { labelStatus.Text = "File list empty."; return; }
             int undoCounter = 0;
             foreach (var file in FileList)
             {

@@ -130,6 +130,7 @@ namespace TfGuiTool
 
             int fileChangeCounter = 0;
             FileList.Clear();
+            listViewFiles.Items.Refresh();
             for (int i = 3; i < lines.Count; i++)
             {
                 string line = lines[i];

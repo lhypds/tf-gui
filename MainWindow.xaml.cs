@@ -151,7 +151,7 @@ namespace TfGuiTool
                 List<string> lines = output.Split("\r\n").ToList();
                 if (lines[0].Contains("There are no pending changes."))
                 {
-                    Status("No pending changes detected.");
+                    Status("No pending changes.");
                     return;
                 }
 

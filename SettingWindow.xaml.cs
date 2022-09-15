@@ -25,17 +25,28 @@ namespace TfGuiTool
             textBoxTfPath.Text = SampleConfigUtils.GetConfig("tf_executable_path");
             textBoxCollectionUrl.Text = SampleConfigUtils.GetConfig("collection_url");
             textBoxWorkspace.Text = SampleConfigUtils.GetConfig("workspace");
+            textBoxUserName.Text = SampleConfigUtils.GetConfig("user_name");
+            textBoxPassword.Text = SampleConfigUtils.GetConfig("password");
             textBoxProjectPath.Text = SampleConfigUtils.GetConfig("project_path");
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(textBoxTfPath.Text.ToString())) { MessageBox.Show("TF.exe Path cannot be empty.", "Message"); return; }
+            if (string.IsNullOrEmpty(textBoxCollectionUrl.Text.ToString())) { MessageBox.Show("Collection URL cannot be empty.", "Message"); return; }
+            if (string.IsNullOrEmpty(textBoxWorkspace.Text.ToString())) { MessageBox.Show("Workspace cannot be empty.", "Message"); return; }
+            if (string.IsNullOrEmpty(textBoxUserName.Text.ToString())) { MessageBox.Show("User Name cannot be empty.", "Message"); return; }
+            if (string.IsNullOrEmpty(textBoxPassword.Text.ToString())) { MessageBox.Show("Password cannot be empty.", "Message"); return; }
+            if (string.IsNullOrEmpty(textBoxProjectPath.Text.ToString())) { MessageBox.Show("Project Path cannot be empty.", "Message"); return; }
+
             File.Delete("config.txt");
             File.Create("config.txt").Close();
             List<string> configStrings = new List<string>();
             configStrings.Add("tf_executable_path" + "," + textBoxTfPath.Text.ToString());
             configStrings.Add("collection_url" + "," + textBoxCollectionUrl.Text.ToString());
             configStrings.Add("workspace" + "," + textBoxWorkspace.Text.ToString());
+            configStrings.Add("user_name" + "," + textBoxUserName.Text.ToString());
+            configStrings.Add("password" + "," + textBoxPassword.Text.ToString());
             configStrings.Add("project_path" + "," + textBoxProjectPath.Text.ToString());
             File.AppendAllLines("config.txt", configStrings);
             Close();

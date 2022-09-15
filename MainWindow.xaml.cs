@@ -67,8 +67,9 @@ namespace TfGuiTool
             foreach (var file in FileList)
             {
                 string cmd = SampleConfigUtils.GetConfig("tf_executable_path") + " undo "
-                + "/collection:" + SampleConfigUtils.GetConfig("collection_url") + " "
-                + "/workspace:" + SampleConfigUtils.GetConfig("workspace") + " ";
+                    + "/collection:" + SampleConfigUtils.GetConfig("collection_url") + " "
+                    + "/workspace:" + SampleConfigUtils.GetConfig("workspace") + " "
+                    + "/login:" + SampleConfigUtils.GetConfig("user_name") + "," + SampleConfigUtils.GetConfig("password") + " ";
                 cmd += file.Path;
                 CommandUtils.Run(cmd, out string output);
                 Debug.WriteLine(output);
@@ -86,7 +87,8 @@ namespace TfGuiTool
             int checkoutCounter = 0;
             foreach (var file in FileList)
             {
-                string cmd = SampleConfigUtils.GetConfig("tf_executable_path") + " checkout ";
+                string cmd = SampleConfigUtils.GetConfig("tf_executable_path") + " checkout "
+                    + "/login:" + SampleConfigUtils.GetConfig("user_name") + "," + SampleConfigUtils.GetConfig("password") + " ";
                 cmd += file.Path;
                 CommandUtils.Run(cmd, out string output);
                 Debug.WriteLine(output);
@@ -101,7 +103,8 @@ namespace TfGuiTool
         {
             string cmd = SampleConfigUtils.GetConfig("tf_executable_path") + " stat "
                 + "/collection:" + SampleConfigUtils.GetConfig("collection_url") + " "
-                + "/workspace:" + SampleConfigUtils.GetConfig("workspace");
+                + "/workspace:" + SampleConfigUtils.GetConfig("workspace") + " "
+                + "/login:" + SampleConfigUtils.GetConfig("user_name") + "," + SampleConfigUtils.GetConfig("password") + " ";
             CommandUtils.Run(cmd, out string output);
             Debug.WriteLine(output);
 

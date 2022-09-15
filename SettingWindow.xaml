@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TfGuiTool"
         mc:Ignorable="d"
-        Title="Settings" Height="194" Width="588" ResizeMode="NoResize" Icon="/Resources/gear.ico">
+        Title="Settings" Height="250" Width="588" ResizeMode="NoResize" Icon="/Resources/gear.ico">
     <Grid>
         <Button x:Name="buttonSave" Content="Save" Margin="0,0,10,10" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="66" Click="buttonSave_Click"/>
         <Label x:Name="labelTfPath" Content="TF.exe Path:" HorizontalAlignment="Left" Margin="3,10,0,0" VerticalAlignment="Top" Width="85"/>
@@ -14,8 +14,12 @@
         <TextBox x:Name="textBoxCollectionUrl" Margin="95,41,10,0" VerticalAlignment="Top" MaxLines="1"/>
         <Label x:Name="labelWorksapce" Content="Workspace:" HorizontalAlignment="Left" Margin="3,64,0,0" VerticalAlignment="Top" Width="85"/>
         <TextBox x:Name="textBoxWorkspace" Margin="95,68,10,0" VerticalAlignment="Top" MaxLines="1"/>
-        <Label x:Name="labelProjectPath" Content="Project Path:" HorizontalAlignment="Left" Margin="3,90,0,0" VerticalAlignment="Top" Width="85"/>
-        <TextBox x:Name="textBoxProjectPath" Margin="95,94,10,0" VerticalAlignment="Top" MaxLines="1"/>
+        <Label x:Name="labelProjectPath" Content="Project Path:" HorizontalAlignment="Left" Margin="3,145,0,0" Width="85" Height="26" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxProjectPath" Margin="95,149,10,0" MaxLines="1" Height="18" VerticalAlignment="Top"/>
+        <Label x:Name="labelUserName" Content="User Name:" HorizontalAlignment="Left" Margin="3,91,0,0" Width="85" Height="26" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxUserName" Margin="95,95,10,0" MaxLines="1" Height="18" VerticalAlignment="Top"/>
+        <Label x:Name="labelPassword" Content="Password:" HorizontalAlignment="Left" Margin="3,118,0,0" Width="85" Height="26" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxPassword" Margin="95,122,10,0" MaxLines="1" Height="18" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

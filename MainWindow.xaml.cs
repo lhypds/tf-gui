@@ -153,9 +153,9 @@ namespace TfGuiTool
 
                 // Get pending file changes
                 string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " stat "
-                + "/collection:" + SimpleConfigUtils.GetConfig("collection_url") + " "
-                + "/workspace:" + SimpleConfigUtils.GetConfig("workspace") + " "
-                + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
+                    + "/collection:" + SimpleConfigUtils.GetConfig("collection_url") + " "
+                    + "/workspace:" + SimpleConfigUtils.GetConfig("workspace") + " "
+                    + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
                 CommandUtils.Run(cmd, out string output);
                 Debug.WriteLine(output);
 

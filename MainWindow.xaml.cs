@@ -74,90 +74,108 @@ namespace TfGuiTool
         private void buttonUndoAll_Click(object sender, RoutedEventArgs e)
         {
             Status("Undoing changes...");
-
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             if (listViewFiles.Items.Count == 0) { Status("File list empty."); return; }
-            int undoCounter = 0;
-            foreach (var file in FileList)
-            {
-                string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " undo "
-                    + "/collection:" + SimpleConfigUtils.GetConfig("collection_url") + " "
-                    + "/workspace:" + SimpleConfigUtils.GetConfig("workspace") + " "
-                    + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
-                cmd += file.Path;
-                CommandUtils.Run(cmd, out string output);
-                Debug.WriteLine(output);
 
-                if (output.Contains("Undoing edit"))
-                    undoCounter++;
-            }
-            FileList.Clear();
-            listViewFiles.Items.Refresh();
-            Status(undoCounter + " file(s) undo.");
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                int undoCounter = 0;
+                foreach (var file in FileList)
+                {
+                    string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " undo "
+                        + "/collection:" + SimpleConfigUtils.GetConfig("collection_url") + " "
+                        + "/workspace:" + SimpleConfigUtils.GetConfig("workspace") + " "
+                        + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
+                    cmd += file.Path;
+                    CommandUtils.Run(cmd, out string output);
+                    Debug.WriteLine(output);
+
+                    if (output.Contains("Undoing edit"))
+                        undoCounter++;
+                }
+                
+                Status(undoCounter + " file(s) undo.");
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    buttonChanges_Click(null, null);
+                }));
+            }).Start();
         }
 
         private void buttonCheckout_Click(object sender, RoutedEventArgs e)
         {
             Status("Checking out files...");
-
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             if (listViewFiles.Items.Count == 0) { Status("File list empty."); return; }
-            int checkoutCounter = 0;
-            foreach (var file in FileList)
-            {
-                string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " checkout "
-                    + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
-                cmd += file.Path;
-                CommandUtils.Run(cmd, out string output);
-                Debug.WriteLine(output);
 
-                if (output.Contains(file.Name))
-                    checkoutCounter++;
-            }
-            Status(checkoutCounter + " file(s) checkout.");
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                int checkoutCounter = 0;
+                foreach (var file in FileList)
+                {
+                    string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " checkout "
+                        + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
+                    cmd += file.Path;
+                    CommandUtils.Run(cmd, out string output);
+                    Debug.WriteLine(output);
+
+                    if (output.Contains(file.Name))
+                        checkoutCounter++;
+                }
+                Status(checkoutCounter + " file(s) checkout.");
+            }).Start();
         }
 
         private void buttonChanges_Click(object sender, RoutedEventArgs e)
         {
             Status("Loading changes...");
-
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             FileList.Clear();
             listViewFiles.Items.Refresh();
 
-            string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " stat "
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                // Get pending file changes
+                string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " stat "
                 + "/collection:" + SimpleConfigUtils.GetConfig("collection_url") + " "
                 + "/workspace:" + SimpleConfigUtils.GetConfig("workspace") + " "
                 + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
-            CommandUtils.Run(cmd, out string output);
-            Debug.WriteLine(output);
+                CommandUtils.Run(cmd, out string output);
+                Debug.WriteLine(output);
 
-            List<string> lines = output.Split("\r\n").ToList();
-            if (lines[0].Contains("There are no pending changes."))
-            {
-                Status("No pending changes detected.");
-                return;
-            }
-
-            int fileChangeCounter = 0;
-            for (int i = 3; i < lines.Count; i++)
-            {
-                string line = lines[i];
-                if (!line.Contains(" ! edit ")) continue;
-
-                List<string> buffer = line.Split(" ! edit ").ToList();
-                string name = buffer[0].Trim();
-                string path = buffer[1].Trim();
-                FileList.Add(new FileItem()
+                List<string> lines = output.Split("\r\n").ToList();
+                if (lines[0].Contains("There are no pending changes."))
                 {
-                    Name = name,
-                    Path = path,
-                });
+                    Status("No pending changes detected.");
+                    return;
+                }
 
-                fileChangeCounter++;
-                listViewFiles.Items.Refresh();
-            }
-            Status(fileChangeCounter + " file(s) pending changes detected.");
+                int fileChangeCounter = 0;
+                for (int i = 3; i < lines.Count; i++)
+                {
+                    string line = lines[i];
+                    if (!line.Contains(" ! edit ")) continue;
+
+                    List<string> buffer = line.Split(" ! edit ").ToList();
+                    string name = buffer[0].Trim();
+                    string path = buffer[1].Trim();
+                    FileList.Add(new FileItem()
+                    {
+                        Name = name,
+                        Path = path,
+                    });
+
+                    fileChangeCounter++;
+                    listViewFiles.Items.Refresh();
+                }
+                Status(fileChangeCounter + " file(s) pending changes detected.");
+            }).Start();
         }
 
         private void buttonCheckin_Click(object sender, RoutedEventArgs e)
@@ -168,6 +186,7 @@ namespace TfGuiTool
                 Status("File list empty.");
                 return;
             }
+
             CheckinWindow checkinWindow = new CheckinWindow(FileList);
             checkinWindow.Owner = this;
             checkinWindow.Closed += (s, e) => { buttonChanges_Click(null, null); };
@@ -176,7 +195,7 @@ namespace TfGuiTool
 
         private void Status(string status)
         {
-            labelStatus.Dispatcher.Invoke(new Action(() => 
+            Dispatcher.BeginInvoke(new Action(() => 
             {
                 this.labelStatus.Text = status;
             }));

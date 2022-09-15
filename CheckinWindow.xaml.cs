@@ -30,21 +30,27 @@ namespace TfGuiTool
 
         private void buttonCheckin_Click(object sender, RoutedEventArgs e)
         {
-            string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " checkin "
+            new Thread(() =>
+            {
+                string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " checkin "
                 + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
 
-            foreach (var file in FileList)
-            {
-                cmd += file.Path + " ";
-            }
-            cmd += "/comment:\"" + textBoxComment.Text.ToString() + "\" "
-                + "/noprompt";
-            CommandUtils.Run(cmd, out string output);
-            Debug.WriteLine(output);
+                foreach (var file in FileList)
+                {
+                    cmd += file.Path + " ";
+                }
+                cmd += "/comment:\"" + textBoxComment.Text.ToString() + "\" "
+                    + "/noprompt";
+                CommandUtils.Run(cmd, out string output);
+                Debug.WriteLine(output);
 
-            labelCheckinResult.Content = "Check-in successfully.";
-            Thread.Sleep(1000);
-            Close();
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    labelCheckinResult.Content = "Check-in successfully.";
+                    Thread.Sleep(600);  // avoid too fast
+                    Close();
+                }));
+            }).Start();
         }
     }
 }

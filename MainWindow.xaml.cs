@@ -29,19 +29,7 @@ namespace TfGuiTool
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<FileItem> _FileList = new List<FileItem>();
-
-        private List<FileItem> FileList
-        {
-            get { return _FileList; }
-            set { 
-                _FileList = value;
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    listViewFiles.Items.Refresh();
-                }));
-            }
-        }
+        private List<FileItem> FileList = new List<FileItem>();
 
         public MainWindow()
         {
@@ -145,6 +133,8 @@ namespace TfGuiTool
         {
             Status("Loading changes...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+            FileList.Clear();
+            listViewFiles.Items.Refresh();
 
             new Thread(() =>
             {
@@ -166,7 +156,6 @@ namespace TfGuiTool
                 }
 
                 int fileChangeCounter = 0;
-                List<FileItem> fileList = new List<FileItem>();
                 for (int i = 3; i < lines.Count; i++)
                 {
                     string line = lines[i];
@@ -175,15 +164,21 @@ namespace TfGuiTool
                     List<string> buffer = line.Split(" ! edit ").ToList();
                     string name = buffer[0].Trim();
                     string path = buffer[1].Trim();
-                    fileList.Add(new FileItem()
+
+                    // .Add can trigger the listViewFiles.Items.Refresh
+                    FileList.Add(new FileItem()
                     {
                         Name = name,
                         Path = path,
                     });
                     fileChangeCounter++;
                 }
-                FileList = fileList;
+
                 Status(fileChangeCounter + " file(s) pending changes detected.");
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    listViewFiles.Items.Refresh();
+                }));
             }).Start();
         }
 

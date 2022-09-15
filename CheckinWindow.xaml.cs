@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -40,6 +41,9 @@ namespace TfGuiTool
                 + "/noprompt";
             CommandUtils.Run(cmd, out string output);
             Debug.WriteLine(output);
+
+            labelCheckinResult.Content = "Check-in successfully.";
+            Thread.Sleep(1000);
             Close();
         }
     }

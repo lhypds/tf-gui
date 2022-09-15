@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using TfGuiTool.Utils;
 
 namespace TfGuiTool
@@ -63,7 +65,7 @@ namespace TfGuiTool
                         Name = System.IO.Path.GetFileName(filePath),
                         Path = filePath
                     });
-                    labelStatus.Text = "File(s) added.";
+                    Status("File(s) added.");
                 }
             }
             listViewFiles.Items.Refresh();
@@ -71,8 +73,10 @@ namespace TfGuiTool
 
         private void buttonUndoAll_Click(object sender, RoutedEventArgs e)
         {
+            Status("Undoing changes...");
+
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
-            if (listViewFiles.Items.Count == 0) { labelStatus.Text = "File list empty."; return; }
+            if (listViewFiles.Items.Count == 0) { Status("File list empty."); return; }
             int undoCounter = 0;
             foreach (var file in FileList)
             {
@@ -89,13 +93,15 @@ namespace TfGuiTool
             }
             FileList.Clear();
             listViewFiles.Items.Refresh();
-            labelStatus.Text = undoCounter + " file(s) undo.";
+            Status(undoCounter + " file(s) undo.");
         }
 
         private void buttonCheckout_Click(object sender, RoutedEventArgs e)
         {
+            Status("Checking out files...");
+
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
-            if (listViewFiles.Items.Count == 0) { labelStatus.Text = "File list empty."; return; }
+            if (listViewFiles.Items.Count == 0) { Status("File list empty."); return; }
             int checkoutCounter = 0;
             foreach (var file in FileList)
             {
@@ -108,11 +114,13 @@ namespace TfGuiTool
                 if (output.Contains(file.Name))
                     checkoutCounter++;
             }
-            labelStatus.Text = checkoutCounter + " file(s) checkout.";
+            Status(checkoutCounter + " file(s) checkout.");
         }
 
         private void buttonChanges_Click(object sender, RoutedEventArgs e)
         {
+            Status("Loading changes...");
+
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             FileList.Clear();
             listViewFiles.Items.Refresh();
@@ -127,7 +135,7 @@ namespace TfGuiTool
             List<string> lines = output.Split("\r\n").ToList();
             if (lines[0].Contains("There are no pending changes."))
             {
-                labelStatus.Text = "No changes detected.";
+                Status("No pending changes detected.");
                 return;
             }
 
@@ -149,7 +157,7 @@ namespace TfGuiTool
                 fileChangeCounter++;
                 listViewFiles.Items.Refresh();
             }
-            labelStatus.Text = fileChangeCounter + " file(s) changes detected.";
+            Status(fileChangeCounter + " file(s) pending changes detected.");
         }
 
         private void buttonCheckin_Click(object sender, RoutedEventArgs e)
@@ -157,12 +165,21 @@ namespace TfGuiTool
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             if (FileList.Count == 0)
             {
-                labelStatus.Text = "File list empty.";
+                Status("File list empty.");
                 return;
             }
             CheckinWindow checkinWindow = new CheckinWindow(FileList);
             checkinWindow.Owner = this;
+            checkinWindow.Closed += (s, e) => { buttonChanges_Click(null, null); };
             checkinWindow.ShowDialog();
+        }
+
+        private void Status(string status)
+        {
+            labelStatus.Dispatcher.Invoke(new Action(() => 
+            {
+                this.labelStatus.Text = status;
+            }));
         }
     }
 

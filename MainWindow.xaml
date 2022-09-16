@@ -16,7 +16,7 @@
         <Button x:Name="buttonChanges" Content="Changes" Margin="0,0,164,39" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="72" Click="buttonChanges_Click"/>
         <Button x:Name="buttonCheckin" Content="Checkin" Margin="0,0,10,39" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="72" Click="buttonCheckin_Click"/>
         <StatusBar Height="20" VerticalAlignment="Bottom">
-            <StatusBarItem FontSize="11">
+            <StatusBarItem FontSize="11" MouseDoubleClick="StatusBarItem_MouseDoubleClick">
                 <TextBlock Name="labelStatus" />
             </StatusBarItem>
         </StatusBar>

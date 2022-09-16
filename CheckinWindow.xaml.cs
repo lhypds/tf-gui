@@ -45,6 +45,7 @@ namespace TfGuiTool
                 cmd += "/comment:\"" + checkinComment + "\" "
                     + "/noprompt";
                 CommandUtils.Run(cmd, out string output);
+                SimpleLogUtils.Write(output);
                 Debug.WriteLine(output);
 
                 Dispatcher.BeginInvoke(new Action(() =>

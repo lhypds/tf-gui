@@ -94,6 +94,7 @@ namespace TfGuiTool
                         + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
                     cmd += file.Path;
                     CommandUtils.Run(cmd, out string output);
+                    SimpleLogUtils.Write(output);
                     Debug.WriteLine(output);
 
                     if (output.Contains("Undoing edit"))
@@ -127,6 +128,7 @@ namespace TfGuiTool
                         + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
                     cmd += file.Path;
                     CommandUtils.Run(cmd, out string output);
+                    SimpleLogUtils.Write(output);
                     Debug.WriteLine(output);
 
                     if (output.Contains(System.IO.Path.GetDirectoryName(file.Path) + ":\r\n" + file.Name))
@@ -157,6 +159,7 @@ namespace TfGuiTool
                     + "/workspace:" + SimpleConfigUtils.GetConfig("workspace") + " "
                     + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
                 CommandUtils.Run(cmd, out string output);
+                SimpleLogUtils.Write(output);
                 Debug.WriteLine(output);
 
                 List<string> lines = output.Split("\r\n").ToList();
@@ -231,6 +234,7 @@ namespace TfGuiTool
                     + "/recursive "
                     + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
                 CommandUtils.Run(cmd, out string output);
+                SimpleLogUtils.Write(output);
                 Debug.WriteLine(output);
 
                 int replacingCounter = 0;
@@ -245,6 +249,11 @@ namespace TfGuiTool
 
                 Status(replacingCounter + " file(s) replaced, " + deletingCounter + " file(s) deleted, all files are up to date.");
             }).Start();
+        }
+
+        private void StatusBarItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (File.Exists("log.txt")) Process.Start("notepad.exe", "log.txt");
         }
     }
 

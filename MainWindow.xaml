@@ -9,7 +9,7 @@
         Title="TF GUI Tool 1.0.0" Height="320" Width="510" Icon="/Resources/tfs.ico" Topmost="True" MinWidth="510" MinHeight="320">
     <Grid>
         <Button x:Name="buttonSettings" Content="Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="buttonSettings_Click" Height="27" Width="72"/>
-        <ListView x:Name="listViewFiles" Margin="10,42,10,71" Drop="listViewFiles_Drop" AllowDrop="True" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+        <ListView x:Name="listViewFiles" Margin="10,42,10,71" Drop="listViewFiles_Drop" AllowDrop="True" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" d:ItemsSource="{d:SampleData ItemCount=5}">
         </ListView>
         <Button x:Name="buttonUndoAll" Content="Undo All" Margin="0,0,87,39" VerticalAlignment="Bottom" Height="27" Click="buttonUndoAll_Click" HorizontalAlignment="Right" Width="72"/>
         <Button x:Name="buttonCheckout" Content="Checkout" HorizontalAlignment="Left" Margin="10,0,0,39" Width="72" Height="27" VerticalAlignment="Bottom" Click="buttonCheckout_Click"/>
@@ -20,5 +20,6 @@
                 <TextBlock Name="labelStatus" />
             </StatusBarItem>
         </StatusBar>
+        <Button x:Name="buttonGet" Content="Get" HorizontalAlignment="Right" Margin="0,0,241,39" Width="72" Height="27" VerticalAlignment="Bottom" Click="buttonGet_Click"/>
     </Grid>
 </Window>

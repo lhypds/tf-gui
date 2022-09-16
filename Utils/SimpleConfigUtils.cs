@@ -19,6 +19,7 @@ namespace TfGuiTool.Utils
             "user_name",
             "password",
             "project_path",
+            "tfs_path",
         };
 
         public static StringDictionary ReadConfigs()

@@ -210,6 +210,37 @@ namespace TfGuiTool
                 this.labelStatus.Text = status;
             }));
         }
+
+        private void buttonGet_Click(object sender, RoutedEventArgs e)
+        {
+            Status("Getting latest code...");
+            if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                // Get pending file changes
+                string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " get "
+                    + SimpleConfigUtils.GetConfig("tfs_path") + " "
+                    + "/recursive "
+                    + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
+                CommandUtils.Run(cmd, out string output);
+                Debug.WriteLine(output);
+
+                int replacingCounter = 0;
+                int deletingCounter = 0;
+                List<string> lines = output.Split("\r\n").ToList();
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    string line = lines[i];
+                    if (line.Contains("Replacing ")) replacingCounter++;
+                    if (line.Contains("Deleting ")) deletingCounter++;
+                }
+
+                Status(replacingCounter + " file(s) replaced, " + deletingCounter + " file(s) deleted, all files are up to date.");
+            }).Start();
+        }
     }
 
     public class FileItem

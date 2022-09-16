@@ -28,6 +28,7 @@ namespace TfGuiTool
             textBoxUserName.Text = SimpleConfigUtils.GetConfig("user_name");
             textBoxPassword.Text = SimpleConfigUtils.GetConfig("password");
             textBoxProjectPath.Text = SimpleConfigUtils.GetConfig("project_path");
+            textBoxTfsPath.Text = SimpleConfigUtils.GetConfig("tfs_path");
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
@@ -38,6 +39,7 @@ namespace TfGuiTool
             if (string.IsNullOrEmpty(textBoxUserName.Text.ToString())) { MessageBox.Show("User Name cannot be empty.", "Message"); return; }
             if (string.IsNullOrEmpty(textBoxPassword.Text.ToString())) { MessageBox.Show("Password cannot be empty.", "Message"); return; }
             if (string.IsNullOrEmpty(textBoxProjectPath.Text.ToString())) { MessageBox.Show("Project Path cannot be empty.", "Message"); return; }
+            if (string.IsNullOrEmpty(textBoxTfsPath.Text.ToString())) { MessageBox.Show("TFS Path cannot be empty.", "Message"); return; }
 
             File.Delete("config.txt");
             File.Create("config.txt").Close();
@@ -48,6 +50,7 @@ namespace TfGuiTool
             configStrings.Add("user_name" + "," + textBoxUserName.Text.ToString());
             configStrings.Add("password" + "," + textBoxPassword.Text.ToString());
             configStrings.Add("project_path" + "," + textBoxProjectPath.Text.ToString());
+            configStrings.Add("tfs_path" + "," + textBoxTfsPath.Text.ToString());
             File.AppendAllLines("config.txt", configStrings);
             Close();
         }

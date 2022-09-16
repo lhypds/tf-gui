@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TfGuiTool"
         mc:Ignorable="d"
-        Title="Settings" Height="250" Width="588" ResizeMode="NoResize" Icon="/Resources/gear.ico"
+        Title="Settings" Height="279" Width="588" ResizeMode="NoResize" Icon="/Resources/gear.ico"
         WindowStartupLocation="CenterOwner">
     <Grid>
         <Button x:Name="buttonSave" Content="Save" Margin="0,0,10,10" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="66" Click="buttonSave_Click"/>
@@ -21,6 +21,8 @@
         <TextBox x:Name="textBoxUserName" Margin="95,95,10,0" MaxLines="1" Height="18" VerticalAlignment="Top"/>
         <Label x:Name="labelPassword" Content="Password:" HorizontalAlignment="Left" Margin="3,118,0,0" Width="85" Height="26" VerticalAlignment="Top"/>
         <TextBox x:Name="textBoxPassword" Margin="95,122,10,0" MaxLines="1" Height="18" VerticalAlignment="Top"/>
+        <Label x:Name="labelTfsPath" Content="TFS Path:" HorizontalAlignment="Left" Margin="3,172,0,0" Width="85" Height="26" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxTfsPath" Margin="95,176,10,0" MaxLines="1" Height="18" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

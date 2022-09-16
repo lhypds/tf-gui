@@ -252,7 +252,14 @@ namespace TfGuiTool
                     if (line.Contains("Deleting ")) deletingCounter++;
                 }
 
-                Status(replacingCounter + " file(s) replaced, " + deletingCounter + " file(s) deleted, all files are up to date.");
+                string statusString = "";
+                if (output.Contains("All files are up to date.")) {
+                    statusString += "All files are up to date.";
+                    statusString += " (" + replacingCounter + " replace, " + deletingCounter + " delete)";
+                } else {
+                    statusString += "Error";
+                }
+                Status(statusString);
             }).Start();
         }
 

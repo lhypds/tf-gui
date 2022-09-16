@@ -127,9 +127,14 @@ namespace TfGuiTool
                     string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " checkout "
                         + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
                     cmd += file.Path;
-                    CommandUtils.Run(cmd, out string output);
+                    CommandUtils.Run(cmd, out string output, out string error);
                     SimpleLogUtils.Write(output);
                     Debug.WriteLine(output);
+                    if (error.Length > 0)
+                    {
+                        SimpleLogUtils.Write("ERROR: " + error);
+                        Debug.WriteLine(error);
+                    }
 
                     if (output.Contains(System.IO.Path.GetDirectoryName(file.Path) + ":\r\n" + file.Name))
                         checkoutCounter++;

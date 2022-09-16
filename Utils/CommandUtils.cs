@@ -53,10 +53,39 @@ namespace TfGuiTool.Utils
             p.StandardInput.WriteLine(cmd);
             p.StandardInput.AutoFlush = true;
 
-            // Get output, by default trim output string
+            // Get output, trim the cmd
             output = p.StandardOutput.ReadToEnd();
             int startIndex = output.IndexOf(cmd) + cmd.Length + 2;
             output = output.Substring(startIndex);
+
+            p.WaitForExit();
+            p.Close();
+        }
+
+        public static void Run(string cmd, out string output, out string error)
+        {
+            Debug.WriteLine("Run: " + cmd);
+            cmd = cmd.Trim().TrimEnd('&') + "&exit";
+
+            using Process p = new Process();
+            p.StartInfo.FileName = CMD_PATH;
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.RedirectStandardInput = true;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.RedirectStandardError = true;
+            p.StartInfo.CreateNoWindow = true;
+            p.StartInfo.Verb = "runas";
+            p.Start();
+            p.StandardInput.WriteLine(cmd);
+            p.StandardInput.AutoFlush = true;
+
+            // Get output, trim the cmd
+            output = p.StandardOutput.ReadToEnd();
+            int startIndex = output.IndexOf(cmd) + cmd.Length + 2;
+            output = output.Substring(startIndex);
+
+            // Get error
+            error = p.StandardError.ReadToEnd();
 
             p.WaitForExit();
             p.Close();

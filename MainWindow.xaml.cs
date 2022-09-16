@@ -120,6 +120,7 @@ namespace TfGuiTool
                 Thread.CurrentThread.IsBackground = true;
 
                 int checkoutCounter = 0;
+                int failedCounter = 0;
                 foreach (var file in FileList)
                 {
                     string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " checkout "
@@ -128,10 +129,14 @@ namespace TfGuiTool
                     CommandUtils.Run(cmd, out string output);
                     Debug.WriteLine(output);
 
-                    if (output.Contains(file.Name))
+                    if (output.Contains(System.IO.Path.GetDirectoryName(file.Path) + ":\r\n" + file.Name))
                         checkoutCounter++;
+                    else failedCounter++;
                 }
-                Status(checkoutCounter + " file(s) checkout.");
+
+                if (failedCounter > 0)
+                    Status(checkoutCounter + " file(s) checkout, " + failedCounter + " file(s) locked by other user.");
+                else Status(checkoutCounter + " file(s) checkout.");
             }).Start();
         }
 

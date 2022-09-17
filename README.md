@@ -2,7 +2,7 @@
 TF GUI Tool
 ===========
 
-Version control with Team Fundation Server without starting Visual Studio.
+Version control with Team Fundation Server(TFS) without using Visual Studio.
 
 * How To Use
 

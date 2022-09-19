@@ -85,24 +85,31 @@ namespace TfGuiTool
         {
             Status("Undoing select file changes...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
-            FileItem selectedFile = listViewFiles.SelectedItem as FileItem;
-            if (listViewFiles.Items.Count == 0 || selectedFile == null) { Status("No file selected."); return; }
+            List<FileItem> selectedFiles = new List<FileItem>();
+            foreach (var selectedItem in listViewFiles.SelectedItems)
+            {
+                selectedFiles.Add(selectedItem as FileItem);
+            }
+            if (listViewFiles.Items.Count == 0 || selectedFiles.Count == 0) { Status("No file selected."); return; }
 
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
 
                 int undoCounter = 0;
-                string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " undo "
-                        + "/collection:" + SimpleConfigUtils.GetConfig("collection_url") + " "
-                        + "/workspace:" + SimpleConfigUtils.GetConfig("workspace") + " "
-                        + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
-                cmd += selectedFile.Path;
-                CommandUtils.Run(cmd, out string output);
-                Debug.WriteLine(output);
+                foreach (var file in selectedFiles)
+                {
+                    string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " undo "
+                            + "/collection:" + SimpleConfigUtils.GetConfig("collection_url") + " "
+                            + "/workspace:" + SimpleConfigUtils.GetConfig("workspace") + " "
+                            + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
+                    cmd += file.Path;
+                    CommandUtils.Run(cmd, out string output);
+                    Debug.WriteLine(output);
 
-                if (output.Contains("Undoing edit"))
-                    undoCounter++;
+                    if (output.Contains("Undoing edit"))
+                        undoCounter++;
+                }
 
                 Status(undoCounter + " file(s) undo.");
                 Thread.Sleep(600);  // avoid too fast
@@ -228,7 +235,7 @@ namespace TfGuiTool
                     fileChangeCounter++;
                 }
 
-                Status(fileChangeCounter + " file(s) pending changes detected.");
+                Status(fileChangeCounter + " file(s) pending changes.");
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     listViewFiles.Items.Refresh();

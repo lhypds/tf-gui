@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
@@ -20,6 +21,7 @@ namespace TfGuiTool.Utils
             "password",
             "project_path",
             "tfs_path",
+            "drag_and_drop_to_checkout"
         };
 
         public static StringDictionary ReadConfigs()
@@ -28,6 +30,7 @@ namespace TfGuiTool.Utils
             if (File.Exists(CONFIG))
             {
                 List<string> configStrings = File.ReadAllLines(CONFIG).ToList();
+                configStrings.Sort();
                 foreach (var configString in configStrings)
                 {
                     if (configString.Contains(SPLITER))
@@ -42,7 +45,45 @@ namespace TfGuiTool.Utils
 
         public static string GetConfig(string key)
         {
-            return ReadConfigs()[key];
+            StringDictionary configs = ReadConfigs();
+            if (configs.ContainsKey(key)) return configs[key];
+            else return "";
+        }
+
+        public static void AddConfig(string key, string value)
+        {
+            List<string> config = new List<string>();
+            config.Add(key + "," + value);
+            File.AppendAllLines("config.txt", config);
+        }
+
+        public static void SetConfig(string key, string newValue)
+        {
+            StringDictionary configs = ReadConfigs();
+            if (configs.ContainsKey(key)) configs.Remove(key);
+            configs.Add(key, newValue);
+
+            List<string> configList = new List<string>();
+            foreach (var configKey in configs.Keys)
+            {
+                configList.Add(configKey.ToString() + "," + configs[configKey.ToString()]);
+            }
+            configList.Sort();
+            File.WriteAllLines("config.txt", configList);
+        }
+
+        public static void RemoveConfig(string key)
+        {
+            StringDictionary configs = ReadConfigs();
+            if (configs.ContainsKey(key)) configs.Remove(key);
+            
+            List<string> configList = new List<string>();
+            foreach (var configKey in configs.Keys)
+            {
+                configList.Add(configKey.ToString() + "," + configs[configKey.ToString()]);
+            }
+            configList.Sort();
+            File.WriteAllLines("config.txt", configList);
         }
 
         public static bool ConfigVerification()

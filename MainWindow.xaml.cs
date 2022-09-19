@@ -35,6 +35,7 @@ namespace TfGuiTool
         {
             InitializeComponent();
             listViewFiles.ItemsSource = FileList;
+            checkboxDragAndDropFileToCheckout.IsChecked = SimpleConfigUtils.GetConfig("drag_and_drop_to_checkout").Equals("true");
         }
 
         private void buttonSettings_Click(object sender, RoutedEventArgs e)
@@ -73,6 +74,11 @@ namespace TfGuiTool
                 }
             }
             listViewFiles.Items.Refresh();
+
+            if (SimpleConfigUtils.GetConfig("drag_and_drop_to_checkout").Equals("true"))
+            {
+                buttonCheckout_Click(null, null);
+            }
         }
 
         private void buttonUndoAll_Click(object sender, RoutedEventArgs e)
@@ -262,6 +268,16 @@ namespace TfGuiTool
         private void StatusBarItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (File.Exists("log.txt")) Process.Start("notepad.exe", "log.txt");
+        }
+
+        private void checkboxDragAndDropFileToCheckout_Checked(object sender, RoutedEventArgs e)
+        {
+            SimpleConfigUtils.SetConfig("drag_and_drop_to_checkout", "true");
+        }
+
+        private void checkboxDragAndDropFileToCheckout_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SimpleConfigUtils.SetConfig("drag_and_drop_to_checkout", "false");
         }
     }
 

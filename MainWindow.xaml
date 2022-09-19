@@ -6,20 +6,21 @@
         xmlns:local="clr-namespace:TfGuiTool"
         xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System.Collections.Specialized" x:Class="TfGuiTool.MainWindow"
         mc:Ignorable="d"
-        Title="TF GUI Tool 1.0.0" Height="320" Width="510" Icon="/Resources/tfs.ico" Topmost="True" MinWidth="510" MinHeight="320">
+        Title="TF GUI Tool 1.0.0" Height="324" Width="510" Icon="/Resources/tfs.ico" Topmost="True" MinWidth="510" MinHeight="320">
     <Grid>
         <Button x:Name="buttonSettings" Content="Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="buttonSettings_Click" Height="27" Width="72"/>
-        <ListView x:Name="listViewFiles" Margin="10,42,10,71" Drop="listViewFiles_Drop" AllowDrop="True" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="listViewFiles" Margin="10,42,10,76" Drop="listViewFiles_Drop" AllowDrop="True" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" d:ItemsSource="{d:SampleData ItemCount=5}">
         </ListView>
-        <Button x:Name="buttonUndoAll" Content="Undo All" Margin="0,0,87,39" VerticalAlignment="Bottom" Height="27" Click="buttonUndoAll_Click" HorizontalAlignment="Right" Width="72"/>
-        <Button x:Name="buttonCheckout" Content="Checkout" HorizontalAlignment="Left" Margin="10,0,0,39" Width="72" Height="27" VerticalAlignment="Bottom" Click="buttonCheckout_Click"/>
-        <Button x:Name="buttonChanges" Content="Changes" Margin="0,0,164,39" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="72" Click="buttonChanges_Click"/>
-        <Button x:Name="buttonCheckin" Content="Checkin" Margin="0,0,10,39" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="72" Click="buttonCheckin_Click"/>
+        <Button x:Name="buttonUndoAll" Content="Undo All" Margin="0,0,87,44" VerticalAlignment="Bottom" Height="27" Click="buttonUndoAll_Click" HorizontalAlignment="Right" Width="72"/>
+        <Button x:Name="buttonCheckout" Content="Checkout" HorizontalAlignment="Left" Margin="10,0,0,44" Width="72" Height="27" VerticalAlignment="Bottom" Click="buttonCheckout_Click"/>
+        <Button x:Name="buttonChanges" Content="Changes" Margin="0,0,164,44" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="72" Click="buttonChanges_Click"/>
+        <Button x:Name="buttonCheckin" Content="Checkin" Margin="0,0,10,44" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="72" Click="buttonCheckin_Click"/>
         <StatusBar Height="20" VerticalAlignment="Bottom">
             <StatusBarItem FontSize="11" MouseDoubleClick="StatusBarItem_MouseDoubleClick">
                 <TextBlock Name="labelStatus" />
             </StatusBarItem>
         </StatusBar>
-        <Button x:Name="buttonGet" Content="Get" HorizontalAlignment="Right" Margin="0,0,241,39" Width="72" Height="27" VerticalAlignment="Bottom" Click="buttonGet_Click"/>
+        <Button x:Name="buttonGet" Content="Get" HorizontalAlignment="Right" Margin="0,0,241,44" Width="72" Height="27" VerticalAlignment="Bottom" Click="buttonGet_Click"/>
+        <CheckBox x:Name="checkboxDragAndDropFileToCheckout" Content="Drag and drop to checkout" HorizontalAlignment="Left" Margin="9,0,0,26" FontSize="11" Height="15" VerticalAlignment="Bottom" Checked="checkboxDragAndDropFileToCheckout_Checked" Unchecked="checkboxDragAndDropFileToCheckout_Unchecked"/>
     </Grid>
 </Window>

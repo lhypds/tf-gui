@@ -449,7 +449,34 @@ namespace TfGuiTool
         {
             FileItem file = listViewFiles.SelectedItem as FileItem;
             if (file == null) return;
-            OpenFileWithDefaultEditor(file.Path);
+            if (Keyboard.Modifiers == ModifierKeys.Control) OpenFileWithDefaultEditor(file.Path);
+            else Diff(file.Path);
+        }
+
+        private void Diff(string filePath)
+        {
+            Status("Differing file...");
+            if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+            FileList.Clear();
+            listViewFiles.Items.Refresh();
+
+            IsEnableAllControls(false);
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                // Get pending file changes
+                string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " diff "
+                    + "\"" + filePath + "\" "
+                    + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
+                CommandUtils.Run(cmd, out string output);
+                Debug.WriteLine(output);
+                File.WriteAllText("diff.txt", output);
+                Status("File diff exported.");
+
+                IsEnableAllControls(true);
+                OpenFileWithDefaultEditor("diff.txt");
+            }).Start();
         }
 
         private void OpenFileWithDefaultEditor(string filePath)

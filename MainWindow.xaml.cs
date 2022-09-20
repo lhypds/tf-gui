@@ -452,7 +452,16 @@ namespace TfGuiTool
 
             // Open file with default editor
             using Process fileopener = new Process();
-            fileopener.StartInfo.FileName = "explorer";
+            string defaultEditor = "";
+            switch (SimpleConfigUtils.GetConfig("default_text_editor"))
+            {
+                case "0": defaultEditor = "explorer"; break;
+                case "1": defaultEditor = "notepad"; break;
+                case "2": defaultEditor = @"C:\Users\Liu\AppData\Local\Programs\Microsoft VS Code\Code.exe"; break;
+                case "3": defaultEditor = @"C:\Program Files\Sublime Text 3\sublime_text.exe"; break;
+                default: defaultEditor = "explorer"; break;
+            }
+            fileopener.StartInfo.FileName = defaultEditor;
             fileopener.StartInfo.Arguments = "\"" + file.Path + "\"";
             fileopener.Start();
         }

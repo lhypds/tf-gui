@@ -21,7 +21,8 @@ namespace TfGuiTool.Utils
             "password",
             "project_path",
             "tfs_path",
-            "drag_and_drop_to_checkout"
+            "drag_and_drop_to_checkout",
+            "default_text_editor"
         };
 
         public static StringDictionary ReadConfigs()

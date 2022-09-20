@@ -30,6 +30,11 @@ namespace TfGuiTool
 
         private void buttonCheckin_Click(object sender, RoutedEventArgs e)
         {
+            Checkin();
+        }
+
+        private void Checkin()
+        {
             string checkinComment = textBoxComment.Text.ToString();
             new Thread(() =>
             {

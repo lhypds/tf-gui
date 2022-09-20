@@ -75,13 +75,68 @@ namespace TfGuiTool
             }
             listViewFiles.Items.Refresh();
 
+            // Proform next step
             if (SimpleConfigUtils.GetConfig("drag_and_drop_to_checkout").Equals("true"))
             {
-                buttonCheckout_Click(null, null);
+                if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+                {
+                    Add();
+                }
+                else
+                {
+                    Checkout();
+                }
             }
         }
 
+        private void Add()
+        {
+            Status("Adding files...");
+            if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+            if (listViewFiles.Items.Count == 0) { Status("File list empty."); return; }
+
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                int checkoutCounter = 0;
+                int failedCounter = 0;
+                foreach (var file in FileList)
+                {
+                    string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " add "
+                        + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
+                    cmd += "\"" + file.Path + "\"";
+                    CommandUtils.Run(cmd, out string output, out string error);
+                    Debug.WriteLine(output);
+                    if (error.Length > 0)
+                    {
+                        SimpleLogUtils.Write("ERROR: " + error);
+                        Debug.WriteLine(error);
+                    }
+
+                    if (output.Contains(System.IO.Path.GetDirectoryName(file.Path) + ":\r\n" + file.Name))
+                        checkoutCounter++;
+                    else failedCounter++;
+                }
+
+                if (failedCounter > 0)
+                    Status(checkoutCounter + " file(s) added, " + failedCounter + " file(s) error.");
+                else Status(checkoutCounter + " file(s) added.");
+
+                Thread.Sleep(600);  // avoid too fast
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    buttonChanges_Click(null, null);
+                }));
+            }).Start();
+        }
+
         private void buttonUndoSelect_Click(object sender, RoutedEventArgs e)
+        {
+            UndoSelect();
+        }
+
+        private void UndoSelect()
         {
             Status("Undoing select file changes...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
@@ -122,6 +177,11 @@ namespace TfGuiTool
 
         private void buttonUndoAll_Click(object sender, RoutedEventArgs e)
         {
+            UndoAll();
+        }
+
+        private void UndoAll()
+        {
             Status("Undoing changes...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             if (listViewFiles.Items.Count == 0) { Status("File list empty."); return; }
@@ -156,6 +216,11 @@ namespace TfGuiTool
 
         private void buttonCheckout_Click(object sender, RoutedEventArgs e)
         {
+            Checkout();
+        }
+
+        private void Checkout()
+        {
             Status("Checking out files...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             if (listViewFiles.Items.Count == 0) { Status("File list empty."); return; }
@@ -187,10 +252,21 @@ namespace TfGuiTool
                 if (failedCounter > 0)
                     Status(checkoutCounter + " file(s) checkout, " + failedCounter + " file(s) error.");
                 else Status(checkoutCounter + " file(s) checkout.");
+
+                Thread.Sleep(600);  // avoid too fast
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    buttonChanges_Click(null, null);
+                }));
             }).Start();
         }
 
         private void buttonChanges_Click(object sender, RoutedEventArgs e)
+        {
+            Changes();
+        }
+
+        private void Changes()
         {
             Status("Loading changes...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
@@ -216,13 +292,25 @@ namespace TfGuiTool
                     return;
                 }
 
-                int fileChangeCounter = 0;
+                int fileEditCounter = 0;
+                int fileAddCounter = 0;
                 for (int i = 3; i < lines.Count; i++)
                 {
                     string line = lines[i];
-                    if (!line.Contains(" ! edit ")) continue;
+                    if (!line.Contains(" ! edit ") && !line.Contains(" ! add ")) continue;
 
-                    List<string> buffer = line.Split(" ! edit ").ToList();
+                    List<string> buffer = new List<string>();
+                    if (line.Contains(" ! edit "))
+                    {
+                        buffer = line.Split(" ! edit ").ToList();
+                        fileEditCounter++;
+                    }
+                    else if (line.Contains(" ! add "))
+                    {
+                        buffer = line.Split(" ! add ").ToList();
+                        fileAddCounter++;
+                    }
+
                     string name = buffer[0].Trim();
                     string path = buffer[1].Trim();
 
@@ -232,10 +320,9 @@ namespace TfGuiTool
                         Name = name,
                         Path = path,
                     });
-                    fileChangeCounter++;
                 }
 
-                Status(fileChangeCounter + " file(s) pending changes.");
+                Status(fileEditCounter + " file(s) edit, " + fileAddCounter + " file(s) add.");
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     listViewFiles.Items.Refresh();
@@ -258,15 +345,12 @@ namespace TfGuiTool
             checkinWindow.ShowDialog();
         }
 
-        private void Status(string status)
+        private void buttonGet_Click(object sender, RoutedEventArgs e)
         {
-            Dispatcher.BeginInvoke(new Action(() => 
-            {
-                this.labelStatus.Text = status;
-            }));
+            Get();
         }
 
-        private void buttonGet_Click(object sender, RoutedEventArgs e)
+        private void Get()
         {
             Status("Getting latest code...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
@@ -294,10 +378,13 @@ namespace TfGuiTool
                 }
 
                 string statusString = "";
-                if (output.Contains("All files are up to date.")) {
+                if (output.Contains("All files are up to date."))
+                {
                     statusString += "All files are up to date.";
                     statusString += " (" + replacingCounter + " replace, " + deletingCounter + " delete)";
-                } else {
+                }
+                else
+                {
                     statusString += "Error";
                 }
                 Status(statusString);
@@ -317,6 +404,19 @@ namespace TfGuiTool
         private void checkboxDragAndDropFileToCheckout_Unchecked(object sender, RoutedEventArgs e)
         {
             SimpleConfigUtils.SetConfig("drag_and_drop_to_checkout", "false");
+        }
+
+        private void Status(string status)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                this.labelStatus.Text = status;
+            }));
+        }
+
+        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Add();
         }
     }
 

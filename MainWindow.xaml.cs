@@ -38,6 +38,21 @@ namespace TfGuiTool
             checkboxDragAndDropFileToCheckout.IsChecked = SimpleConfigUtils.GetConfig("drag_and_drop_to_checkout").Equals("true");
         }
 
+        private void IsEnableAllControls(bool isEnable)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                buttonAdd.IsEnabled = isEnable;
+                buttonChanges.IsEnabled = isEnable;
+                buttonCheckin.IsEnabled = isEnable;
+                buttonCheckout.IsEnabled = isEnable;
+                buttonGet.IsEnabled = isEnable;
+                buttonUndoSelect.IsEnabled = isEnable;
+                buttonSettings.IsEnabled = isEnable;
+                buttonUndoAll.IsEnabled = isEnable;
+            }));
+        }
+
         private void buttonSettings_Click(object sender, RoutedEventArgs e)
         {
             if (Keyboard.Modifiers == ModifierKeys.Control) 
@@ -100,6 +115,7 @@ namespace TfGuiTool
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             if (listViewFiles.Items.Count == 0) { Status("File list empty."); return; }
 
+            IsEnableAllControls(false);
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
@@ -133,6 +149,8 @@ namespace TfGuiTool
                 {
                     buttonChanges_Click(null, null);
                 }));
+
+                IsEnableAllControls(true);
             }).Start();
         }
 
@@ -152,6 +170,7 @@ namespace TfGuiTool
             }
             if (listViewFiles.Items.Count == 0 || selectedFiles.Count == 0) { Status("No file selected."); return; }
 
+            IsEnableAllControls(false);
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
@@ -177,6 +196,8 @@ namespace TfGuiTool
                 {
                     buttonChanges_Click(null, null);
                 }));
+
+                IsEnableAllControls(true);
             }).Start();
         }
 
@@ -191,6 +212,7 @@ namespace TfGuiTool
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             if (listViewFiles.Items.Count == 0) { Status("File list empty."); return; }
 
+            IsEnableAllControls(false);
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
@@ -216,6 +238,8 @@ namespace TfGuiTool
                 {
                     buttonChanges_Click(null, null);
                 }));
+
+                IsEnableAllControls(true);
             }).Start();
         }
 
@@ -230,6 +254,7 @@ namespace TfGuiTool
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             if (listViewFiles.Items.Count == 0) { Status("File list empty."); return; }
 
+            IsEnableAllControls(false);
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
@@ -263,6 +288,8 @@ namespace TfGuiTool
                 {
                     buttonChanges_Click(null, null);
                 }));
+
+                IsEnableAllControls(true);
             }).Start();
         }
 
@@ -278,6 +305,7 @@ namespace TfGuiTool
             FileList.Clear();
             listViewFiles.Items.Refresh();
 
+            IsEnableAllControls(false);
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
@@ -332,6 +360,8 @@ namespace TfGuiTool
                 {
                     listViewFiles.Items.Refresh();
                 }));
+
+                IsEnableAllControls(true);
             }).Start();
         }
 
@@ -360,6 +390,7 @@ namespace TfGuiTool
             Status("Getting latest code...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
 
+            IsEnableAllControls(false);
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
@@ -393,6 +424,8 @@ namespace TfGuiTool
                     statusString += "Error";
                 }
                 Status(statusString);
+
+                IsEnableAllControls(true);
             }).Start();
         }
 

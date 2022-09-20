@@ -18,6 +18,8 @@ Ctrl click Settings to manually edit config.txt.
 Double click file to get diff.  
 Control double click file to open file.  
 
+* Support for Vscode, Sublime Text 3 and Vim
+
 * Screenshot
 
 ![image](https://user-images.githubusercontent.com/4526937/191174079-1074871d-6722-4df8-a469-307cdf3a1b38.png)

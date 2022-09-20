@@ -10,21 +10,21 @@
     <Grid>
         <Button x:Name="buttonSave" Content="Save" Margin="0,0,10,10" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="66" Click="buttonSave_Click"/>
         <Label x:Name="labelTfPath" Content="TF.exe Path:" HorizontalAlignment="Left" Margin="3,10,0,0" VerticalAlignment="Top" Width="85"/>
-        <TextBox x:Name="textBoxTfPath" Margin="95,14,10,0" VerticalAlignment="Top" MaxLines="1"/>
+        <TextBox x:Name="textBoxTfPath" Margin="95,14,10,0" VerticalAlignment="Top" MaxLines="1" TabIndex="1"/>
         <Label x:Name="labelCollectionUrl" Content="Collection URL:" HorizontalAlignment="Left" Margin="3,37,0,0" VerticalAlignment="Top" Width="92"/>
-        <TextBox x:Name="textBoxCollectionUrl" Margin="95,41,10,0" VerticalAlignment="Top" MaxLines="1"/>
+        <TextBox x:Name="textBoxCollectionUrl" Margin="95,41,10,0" VerticalAlignment="Top" MaxLines="1" TabIndex="2"/>
         <Label x:Name="labelWorksapce" Content="Workspace:" HorizontalAlignment="Left" Margin="3,64,0,0" VerticalAlignment="Top" Width="85"/>
-        <TextBox x:Name="textBoxWorkspace" Margin="95,68,10,0" VerticalAlignment="Top" MaxLines="1"/>
+        <TextBox x:Name="textBoxWorkspace" Margin="95,68,10,0" VerticalAlignment="Top" MaxLines="1" TabIndex="3"/>
         <Label x:Name="labelProjectPath" Content="Project Path:" HorizontalAlignment="Left" Margin="3,145,0,0" Width="85" Height="26" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBoxProjectPath" Margin="95,149,10,0" MaxLines="1" Height="18" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxProjectPath" Margin="95,149,10,0" MaxLines="1" Height="18" VerticalAlignment="Top" TabIndex="6"/>
         <Label x:Name="labelUserName" Content="User Name:" HorizontalAlignment="Left" Margin="3,91,0,0" Width="85" Height="26" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBoxUserName" Margin="95,95,10,0" MaxLines="1" Height="18" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxUserName" Margin="95,95,10,0" MaxLines="1" Height="18" VerticalAlignment="Top" TabIndex="4"/>
         <Label x:Name="labelPassword" Content="Password:" HorizontalAlignment="Left" Margin="3,118,0,0" Width="85" Height="26" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBoxPassword" Margin="95,122,10,0" MaxLines="1" Height="18" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxPassword" Margin="95,122,10,0" MaxLines="1" Height="18" VerticalAlignment="Top" TabIndex="5"/>
         <Label x:Name="labelTfsPath" Content="TFS Path:" HorizontalAlignment="Left" Margin="3,172,0,0" Width="85" Height="26" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBoxTfsPath" Margin="95,176,10,0" MaxLines="1" Height="18" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxTfsPath" Margin="95,176,10,0" MaxLines="1" Height="18" VerticalAlignment="Top" TabIndex="7"/>
         <Label x:Name="labelDefaultEditor" Content="Default Editor:" HorizontalAlignment="Left" Margin="3,199,0,0" Width="85" Height="26" VerticalAlignment="Top"/>
-        <ComboBox x:Name="comboBoxDefaultEditor" Margin="95,202,294,0" VerticalAlignment="Top">
+        <ComboBox x:Name="comboBoxDefaultEditor" Margin="95,202,294,0" VerticalAlignment="Top" TabIndex="8">
             <ComboBoxItem Content="System Default"></ComboBoxItem>
             <ComboBoxItem Content="Notepad"></ComboBoxItem>
             <ComboBoxItem Content="Vscode"></ComboBoxItem>

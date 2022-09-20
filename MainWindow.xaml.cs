@@ -469,11 +469,11 @@ namespace TfGuiTool
                     + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
                 CommandUtils.Run(cmd, out string output);
                 Debug.WriteLine(output);
-                File.WriteAllText("diff.txt", output);
+                File.WriteAllText("diff_result.diff", output);
                 Status("File diff exported.");
 
                 IsEnableAllControls(true);
-                OpenFileWithDefaultEditor("diff.txt");
+                OpenFileWithDefaultEditor("diff_result.diff");
             }).Start();
         }
 

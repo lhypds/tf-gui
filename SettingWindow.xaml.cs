@@ -48,6 +48,14 @@ namespace TfGuiTool
             if (string.IsNullOrEmpty(textBoxTfsPath.Text.ToString())) { MessageBox.Show("TFS Path cannot be empty.", "Message"); return; }
             if (string.IsNullOrEmpty(comboBoxDefaultEditor.SelectedIndex.ToString())) { MessageBox.Show("Default text editor cannot be empty.", "Message"); return; }
 
+            switch (comboBoxDefaultEditor.SelectedIndex)
+            {
+                case 2: if (!File.Exists(Const.VSCODE_PATH)) { MessageBox.Show("VS Code not found in your system.", "Message"); comboBoxDefaultEditor.SelectedIndex = 0; return; } break;
+                case 3: if (!File.Exists(Const.SUBLIME_TEXT_3_PATH)) { MessageBox.Show("Sublime Text 3 not found in your system.", "Message"); comboBoxDefaultEditor.SelectedIndex = 0; return; } break;
+                case 4: if (!File.Exists(Const.VIM_PATH)) { MessageBox.Show("Vim not found in your system.", "Message"); comboBoxDefaultEditor.SelectedIndex = 0; return; } break;
+                default: break;
+            }
+
             StringDictionary configs = SimpleConfigUtils.ReadConfigs();
             if (configs.ContainsKey("tf_executable_path")) configs.Remove("tf_executable_path"); configs.Add("tf_executable_path", textBoxTfPath.Text.ToString());
             if (configs.ContainsKey("collection_url")) configs.Remove("collection_url"); configs.Add("collection_url", textBoxCollectionUrl.Text.ToString());

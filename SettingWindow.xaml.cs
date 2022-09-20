@@ -23,16 +23,18 @@ namespace TfGuiTool
         public SettingWindow()
         {
             InitializeComponent();
-            textBoxTfPath.Text = SimpleConfigUtils.GetConfig("tf_executable_path");
-            textBoxCollectionUrl.Text = SimpleConfigUtils.GetConfig("collection_url");
-            textBoxWorkspace.Text = SimpleConfigUtils.GetConfig("workspace");
-            textBoxUserName.Text = SimpleConfigUtils.GetConfig("user_name");
-            textBoxPassword.Text = SimpleConfigUtils.GetConfig("password");
-            textBoxProjectPath.Text = SimpleConfigUtils.GetConfig("project_path");
-            textBoxTfsPath.Text = SimpleConfigUtils.GetConfig("tfs_path");
+
+            StringDictionary configs = SimpleConfigUtils.ReadConfigs();
+            if (configs.ContainsKey("tf_executable_path")) textBoxTfPath.Text = configs["tf_executable_path"];
+            if (configs.ContainsKey("collection_url")) textBoxCollectionUrl.Text = configs["collection_url"];
+            if (configs.ContainsKey("workspace")) textBoxWorkspace.Text = configs["workspace"];
+            if (configs.ContainsKey("user_name")) textBoxUserName.Text = configs["user_name"];
+            if (configs.ContainsKey("password")) textBoxPassword.Text = configs["password"];
+            if (configs.ContainsKey("project_path")) textBoxProjectPath.Text = configs["project_path"];
+            if (configs.ContainsKey("tfs_path")) textBoxTfsPath.Text = configs["tfs_path"];
 
             // 0 = system default, 1 = notepad, 2 = vscode, 3 = sublime text, 4 = vim
-            comboBoxDefaultEditor.SelectedIndex = int.Parse(SimpleConfigUtils.GetConfig("default_text_editor"));
+            if (configs.ContainsKey("default_text_editor")) comboBoxDefaultEditor.SelectedIndex = int.Parse(configs["default_text_editor"]); else comboBoxDefaultEditor.SelectedIndex = 0;
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
@@ -64,11 +66,6 @@ namespace TfGuiTool
             configList.Sort();
             File.WriteAllLines("config.txt", configList);
             Close();
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

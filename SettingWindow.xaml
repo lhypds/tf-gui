@@ -28,7 +28,7 @@
             <ComboBoxItem Content="System Default"></ComboBoxItem>
             <ComboBoxItem Content="Notepad"></ComboBoxItem>
             <ComboBoxItem Content="Vscode"></ComboBoxItem>
-            <ComboBoxItem Content="Sublime Text"></ComboBoxItem>
+            <ComboBoxItem Content="Sublime Text 3"></ComboBoxItem>
         </ComboBox>
 
     </Grid>

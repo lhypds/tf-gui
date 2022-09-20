@@ -18,4 +18,4 @@ Ctrl click Settings to manually edit config.txt.
 
 * Screenshot
 
-![image](https://user-images.githubusercontent.com/4526937/190971843-b6aab019-a0b3-4dca-aa26-d9cbfec9ff5c.png)
+![image](https://user-images.githubusercontent.com/4526937/191174079-1074871d-6722-4df8-a469-307cdf3a1b38.png)

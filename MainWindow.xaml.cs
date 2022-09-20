@@ -89,6 +89,11 @@ namespace TfGuiTool
             }
         }
 
+        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Add();
+        }
+
         private void Add()
         {
             Status("Adding files...");
@@ -412,11 +417,6 @@ namespace TfGuiTool
             {
                 this.labelStatus.Text = status;
             }));
-        }
-
-        private void buttonAdd_Click(object sender, RoutedEventArgs e)
-        {
-            Add();
         }
     }
 

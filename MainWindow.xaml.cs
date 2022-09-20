@@ -432,7 +432,7 @@ namespace TfGuiTool
 
         private void StatusBarItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (File.Exists("log.txt")) Process.Start("notepad.exe", "log.txt");
+            if (File.Exists("log.txt")) OpenFileWithDefaultEditor("log.txt");
         }
 
         private void checkboxDragAndDropFileToCheckout_Checked(object sender, RoutedEventArgs e)
@@ -449,8 +449,11 @@ namespace TfGuiTool
         {
             FileItem file = listViewFiles.SelectedItem as FileItem;
             if (file == null) return;
+            OpenFileWithDefaultEditor(file.Path);
+        }
 
-            // Open file with default editor
+        private void OpenFileWithDefaultEditor(string filePath)
+        {
             using Process fileopener = new Process();
             string defaultEditor = "";
             switch (SimpleConfigUtils.GetConfig("default_text_editor"))
@@ -462,7 +465,7 @@ namespace TfGuiTool
                 default: defaultEditor = "explorer"; break;
             }
             fileopener.StartInfo.FileName = defaultEditor;
-            fileopener.StartInfo.Arguments = "\"" + file.Path + "\"";
+            fileopener.StartInfo.Arguments = "\"" + filePath + "\"";
             fileopener.Start();
         }
 

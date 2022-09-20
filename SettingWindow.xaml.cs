@@ -31,7 +31,7 @@ namespace TfGuiTool
             textBoxProjectPath.Text = SimpleConfigUtils.GetConfig("project_path");
             textBoxTfsPath.Text = SimpleConfigUtils.GetConfig("tfs_path");
 
-            // 0 = system default, 1 = notepad, 2 = vscode, 3 = sublime text
+            // 0 = system default, 1 = notepad, 2 = vscode, 3 = sublime text, 4 = vim
             comboBoxDefaultEditor.SelectedIndex = int.Parse(SimpleConfigUtils.GetConfig("default_text_editor"));
         }
 

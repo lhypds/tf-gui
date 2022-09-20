@@ -487,6 +487,7 @@ namespace TfGuiTool
                 case "1": defaultEditor = "notepad"; break;
                 case "2": defaultEditor = @"C:\Users\Liu\AppData\Local\Programs\Microsoft VS Code\Code.exe"; break;
                 case "3": defaultEditor = @"C:\Program Files\Sublime Text 3\sublime_text.exe"; break;
+                case "4": defaultEditor = @"C:\Program Files (x86)\Vim\vim90\gvim.exe"; break;
                 default: defaultEditor = "explorer"; break;
             }
             fileopener.StartInfo.FileName = defaultEditor;

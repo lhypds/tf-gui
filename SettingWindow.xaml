@@ -24,11 +24,12 @@
         <Label x:Name="labelTfsPath" Content="TFS Path:" HorizontalAlignment="Left" Margin="3,172,0,0" Width="85" Height="26" VerticalAlignment="Top"/>
         <TextBox x:Name="textBoxTfsPath" Margin="95,176,10,0" MaxLines="1" Height="18" VerticalAlignment="Top"/>
         <Label x:Name="labelDefaultEditor" Content="Default Editor:" HorizontalAlignment="Left" Margin="3,199,0,0" Width="85" Height="26" VerticalAlignment="Top"/>
-        <ComboBox x:Name="comboBoxDefaultEditor" Margin="95,202,294,0" VerticalAlignment="Top" SelectionChanged="ComboBox_SelectionChanged">
+        <ComboBox x:Name="comboBoxDefaultEditor" Margin="95,202,294,0" VerticalAlignment="Top">
             <ComboBoxItem Content="System Default"></ComboBoxItem>
             <ComboBoxItem Content="Notepad"></ComboBoxItem>
             <ComboBoxItem Content="Vscode"></ComboBoxItem>
             <ComboBoxItem Content="Sublime Text 3"></ComboBoxItem>
+            <ComboBoxItem Content="Vim"></ComboBoxItem>
         </ComboBox>
 
     </Grid>

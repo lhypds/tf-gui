@@ -185,7 +185,7 @@ namespace TfGuiTool
                 }
 
                 if (failedCounter > 0)
-                    Status(checkoutCounter + " file(s) checkout, " + failedCounter + " file(s) locked by other user.");
+                    Status(checkoutCounter + " file(s) checkout, " + failedCounter + " file(s) error.");
                 else Status(checkoutCounter + " file(s) checkout.");
             }).Start();
         }

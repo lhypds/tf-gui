@@ -15,6 +15,8 @@ TF.exe Path Example:
 
 Double click status bar to show log file.  
 Ctrl click Settings to manually edit config.txt.  
+Double click file to get diff.  
+Control double click file to open file.  
 
 * Screenshot
 

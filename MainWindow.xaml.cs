@@ -445,6 +445,18 @@ namespace TfGuiTool
             SimpleConfigUtils.SetConfig("drag_and_drop_to_checkout", "false");
         }
 
+        private void listViewFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            FileItem file = listViewFiles.SelectedItem as FileItem;
+            if (file == null) return;
+
+            // Open file with default editor
+            using Process fileopener = new Process();
+            fileopener.StartInfo.FileName = "explorer";
+            fileopener.StartInfo.Arguments = "\"" + file.Path + "\"";
+            fileopener.Start();
+        }
+
         private void Status(string status)
         {
             Dispatcher.BeginInvoke(new Action(() =>

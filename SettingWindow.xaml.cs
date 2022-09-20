@@ -39,18 +39,16 @@ namespace TfGuiTool
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            switch (comboBoxDefaultEditor.SelectedIndex)
-            {
-                case 2: if (!File.Exists(Const.VSCODE_PATH)) { MessageBox.Show("VS Code not found in your system.", "Message"); comboBoxDefaultEditor.SelectedIndex = 0; return; } break;
-                case 3: if (!File.Exists(Const.SUBLIME_TEXT_3_PATH)) { MessageBox.Show("Sublime Text 3 not found in your system.", "Message"); comboBoxDefaultEditor.SelectedIndex = 0; return; } break;
-                case 4: if (!File.Exists(Const.VIM_PATH)) { MessageBox.Show("Vim not found in your system.", "Message"); comboBoxDefaultEditor.SelectedIndex = 0; return; } break;
-                default: break;
-            }
-
             StringDictionary configs = SimpleConfigUtils.ReadConfigs();
 
             if (!string.IsNullOrEmpty(textBoxTfPath.Text.ToString()))
             {
+                if (!File.Exists(textBoxTfPath.Text.ToString()))
+                {
+                    MessageBox.Show("TF.exe not found.", "Message");
+                    return;
+                }
+
                 if (configs.ContainsKey("tf_executable_path")) configs.Remove("tf_executable_path");
                 configs.Add("tf_executable_path", textBoxTfPath.Text.ToString());
             }
@@ -81,6 +79,12 @@ namespace TfGuiTool
 
             if (!string.IsNullOrEmpty(textBoxProjectPath.Text.ToString()))
             {
+                if (!Directory.Exists(textBoxProjectPath.Text.ToString()))
+                {
+                    MessageBox.Show("Project path not found.", "Message");
+                    return;
+                }
+
                 if (configs.ContainsKey("project_path")) configs.Remove("project_path");
                 configs.Add("project_path", textBoxProjectPath.Text.ToString());
             }
@@ -93,6 +97,35 @@ namespace TfGuiTool
 
             if (!string.IsNullOrEmpty(comboBoxDefaultEditor.SelectedIndex.ToString()))
             {
+                switch (comboBoxDefaultEditor.SelectedIndex)
+                {
+                    case 2: 
+                        if (!File.Exists(Const.VSCODE_PATH)) 
+                        { 
+                            MessageBox.Show("VS Code not found in your system.", "Message"); 
+                            comboBoxDefaultEditor.SelectedIndex = 0; 
+                            return; 
+                        } 
+                        break;
+                    case 3: 
+                        if (!File.Exists(Const.SUBLIME_TEXT_3_PATH)) 
+                        {
+                            MessageBox.Show("Sublime Text 3 not found in your system.", "Message"); 
+                            comboBoxDefaultEditor.SelectedIndex = 0; 
+                            return;
+                        } 
+                        break;
+                    case 4: 
+                        if (!File.Exists(Const.VIM_PATH)) 
+                        { 
+                            MessageBox.Show("Vim not found in your system.", "Message");
+                            comboBoxDefaultEditor.SelectedIndex = 0; 
+                            return;
+                        } 
+                        break;
+                    default: break;
+                }
+
                 if (configs.ContainsKey("default_text_editor")) configs.Remove("default_text_editor");
                 configs.Add("default_text_editor", comboBoxDefaultEditor.SelectedIndex.ToString());
             }

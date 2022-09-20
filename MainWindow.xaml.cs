@@ -111,8 +111,9 @@ namespace TfGuiTool
 
         private void Add()
         {
-            Status("Adding files...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+            Status("Adding files...");
+
             if (listViewFiles.Items.Count == 0) { Status("File list empty."); return; }
 
             IsEnableAllControls(false);
@@ -161,8 +162,9 @@ namespace TfGuiTool
 
         private void UndoSelect()
         {
-            Status("Undoing select file changes...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+            Status("Undoing select file changes...");
+
             List<FileItem> selectedFiles = new List<FileItem>();
             foreach (var selectedItem in listViewFiles.SelectedItems)
             {
@@ -208,8 +210,9 @@ namespace TfGuiTool
 
         private void UndoAll()
         {
-            Status("Undoing changes...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+            Status("Undoing changes...");
+
             if (listViewFiles.Items.Count == 0) { Status("File list empty."); return; }
 
             IsEnableAllControls(false);
@@ -250,8 +253,9 @@ namespace TfGuiTool
 
         private void Checkout()
         {
-            Status("Checking out files...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+            Status("Checking out files...");
+
             if (listViewFiles.Items.Count == 0) { Status("File list empty."); return; }
 
             IsEnableAllControls(false);
@@ -300,8 +304,9 @@ namespace TfGuiTool
 
         private void Changes()
         {
-            Status("Loading changes...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+            Status("Loading changes...");
+
             FileList.Clear();
             listViewFiles.Items.Refresh();
 
@@ -388,8 +393,8 @@ namespace TfGuiTool
 
         private void Get()
         {
-            Status("Getting latest code...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+            Status("Getting latest code...");
 
             IsEnableAllControls(false);
             new Thread(() =>
@@ -455,8 +460,8 @@ namespace TfGuiTool
 
         private void Diff(string filePath)
         {
-            Status("Differing file...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+            Status("Differing file...");
 
             IsEnableAllControls(false);
             new Thread(() =>

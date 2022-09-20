@@ -35,6 +35,8 @@ namespace TfGuiTool
 
         private void Checkin()
         {
+            if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+
             string checkinComment = textBoxComment.Text.ToString();
             new Thread(() =>
             {

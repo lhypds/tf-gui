@@ -28,6 +28,14 @@ namespace TfGuiTool
             FileList = fileList;
         }
 
+        private void IsEnableAllControls(bool isEnable)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                buttonCheckin.IsEnabled = isEnable;
+            }));
+        }
+
         private void buttonCheckin_Click(object sender, RoutedEventArgs e)
         {
             Checkin();
@@ -36,6 +44,8 @@ namespace TfGuiTool
         private void Checkin()
         {
             string checkinComment = textBoxComment.Text.ToString();
+
+            IsEnableAllControls(false);
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
@@ -53,6 +63,7 @@ namespace TfGuiTool
                 SimpleLogUtils.Write(output);
                 Debug.WriteLine(output);
 
+                IsEnableAllControls(true);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     if (output.Contains("checked in"))

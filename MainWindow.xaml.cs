@@ -103,7 +103,7 @@ namespace TfGuiTool
                             + "/collection:" + SimpleConfigUtils.GetConfig("collection_url") + " "
                             + "/workspace:" + SimpleConfigUtils.GetConfig("workspace") + " "
                             + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
-                    cmd += file.Path;
+                    cmd += "\"" + file.Path + "\"";
                     CommandUtils.Run(cmd, out string output);
                     Debug.WriteLine(output);
 
@@ -137,7 +137,7 @@ namespace TfGuiTool
                         + "/collection:" + SimpleConfigUtils.GetConfig("collection_url") + " "
                         + "/workspace:" + SimpleConfigUtils.GetConfig("workspace") + " "
                         + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
-                    cmd += file.Path;
+                    cmd += "\"" + file.Path + "\"";
                     CommandUtils.Run(cmd, out string output);
                     Debug.WriteLine(output);
 
@@ -170,7 +170,7 @@ namespace TfGuiTool
                 {
                     string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " checkout "
                         + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
-                    cmd += file.Path;
+                    cmd += "\"" + file.Path + "\"";
                     CommandUtils.Run(cmd, out string output, out string error);
                     Debug.WriteLine(output);
                     if (error.Length > 0)

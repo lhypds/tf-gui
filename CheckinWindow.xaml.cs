@@ -40,7 +40,7 @@ namespace TfGuiTool
 
                 foreach (var file in FileList)
                 {
-                    cmd += file.Path + " ";
+                    cmd += "\"" + file.Path + "\"" + " ";
                 }
                 cmd += "/comment:\"" + checkinComment + "\" "
                     + "/noprompt";

@@ -457,8 +457,6 @@ namespace TfGuiTool
         {
             Status("Differing file...");
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
-            FileList.Clear();
-            listViewFiles.Items.Refresh();
 
             IsEnableAllControls(false);
             new Thread(() =>

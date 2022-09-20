@@ -74,7 +74,7 @@ namespace TfGuiTool
             // Ctrl enter to checkin
             if (e.Key == Key.Enter && Keyboard.Modifiers == ModifierKeys.Control)
             {
-                buttonCheckin_Click(null, null);
+                Checkin();
             }
         }
     }

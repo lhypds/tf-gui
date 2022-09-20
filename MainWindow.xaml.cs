@@ -192,12 +192,12 @@ namespace TfGuiTool
 
                 Status(undoCounter + " file(s) undo.");
                 Thread.Sleep(600);  // avoid too fast
+
+                IsEnableAllControls(true);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     buttonChanges_Click(null, null);
                 }));
-
-                IsEnableAllControls(true);
             }).Start();
         }
 
@@ -234,12 +234,12 @@ namespace TfGuiTool
 
                 Status(undoCounter + " file(s) undo.");
                 Thread.Sleep(600);  // avoid too fast
+
+                IsEnableAllControls(true);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     buttonChanges_Click(null, null);
                 }));
-
-                IsEnableAllControls(true);
             }).Start();
         }
 
@@ -284,12 +284,12 @@ namespace TfGuiTool
                 else Status(checkoutCounter + " file(s) checkout.");
 
                 Thread.Sleep(600);  // avoid too fast
+
+                IsEnableAllControls(true);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     buttonChanges_Click(null, null);
                 }));
-
-                IsEnableAllControls(true);
             }).Start();
         }
 
@@ -322,6 +322,7 @@ namespace TfGuiTool
                 if (lines[0].Contains("There are no pending changes."))
                 {
                     Status("No pending changes.");
+                    IsEnableAllControls(true);
                     return;
                 }
 

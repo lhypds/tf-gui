@@ -58,7 +58,7 @@ namespace TfGuiTool
             if (Keyboard.Modifiers == ModifierKeys.Control) 
             {
                 if (File.Exists("config.txt"))
-                    Process.Start("notepad.exe", "config.txt");
+                    OpenFileWithDefaultEditor("config.txt");
                 return;
             }
 

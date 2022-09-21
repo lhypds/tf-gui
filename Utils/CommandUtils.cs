@@ -13,6 +13,21 @@ namespace TfGuiTool.Utils
     {
         private const string CMD_PATH = @"C:\Windows\System32\cmd.exe";
 
+        private static ProcessStartInfo StartInfoInit()
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo()
+            {
+                FileName = CMD_PATH,
+                UseShellExecute = false,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true,
+                Verb = "runas",
+            };
+            return startInfo;
+        }
+
         public static void Run(string cmd)
         {
             // Note: No matter execute success or not execute exit
@@ -21,18 +36,8 @@ namespace TfGuiTool.Utils
             cmd = cmd.Trim().TrimEnd('&') + "&exit";
 
             using Process process = new Process();
-            process.StartInfo.FileName = CMD_PATH;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardInput = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            //process.StartInfo.StandardInputEncoding = System.Text.Encoding.UTF8;
-            process.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
-            process.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.Verb = "runas";
+            process.StartInfo = StartInfoInit();
             process.Start();
-
             process.StandardInput.WriteLine(cmd);
             process.StandardInput.AutoFlush = true;
             process.WaitForExit();
@@ -45,21 +50,12 @@ namespace TfGuiTool.Utils
             cmd = cmd.Trim().TrimEnd('&') + "&exit";
 
             using Process process = new Process();
-            process.StartInfo.FileName = CMD_PATH;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardInput = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            //process.StartInfo.StandardInputEncoding = System.Text.Encoding.UTF8;
-            process.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
-            process.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.Verb = "runas";
+            process.StartInfo = StartInfoInit();
             process.Start();
             process.StandardInput.WriteLine(cmd);
             process.StandardInput.AutoFlush = true;
 
-            // Get output, trim the cmd
+            // Get output, trim the output
             output = process.StandardOutput.ReadToEnd();
             int startIndex = output.IndexOf(cmd) + cmd.Length + 2;
             output = output.Substring(startIndex);
@@ -74,21 +70,12 @@ namespace TfGuiTool.Utils
             cmd = cmd.Trim().TrimEnd('&') + "&exit";
 
             using Process process = new Process();
-            process.StartInfo.FileName = CMD_PATH;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardInput = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            //process.StartInfo.StandardInputEncoding = System.Text.Encoding.UTF8;
-            process.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
-            process.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.Verb = "runas";
+            process.StartInfo = StartInfoInit();
             process.Start();
             process.StandardInput.WriteLine(cmd);
             process.StandardInput.AutoFlush = true;
 
-            // Get output, trim the cmd
+            // Get output, trim the output
             output = process.StandardOutput.ReadToEnd();
             int startIndex = output.IndexOf(cmd) + cmd.Length + 2;
             output = output.Substring(startIndex);
@@ -100,38 +87,7 @@ namespace TfGuiTool.Utils
             process.Close();
         }
 
-        public static void Run(string cmd, out string output, bool doTrim)
-        {
-            Debug.WriteLine("Run: " + cmd);
-            cmd = cmd.Trim().TrimEnd('&') + "&exit";
-
-            using Process process = new Process();
-            process.StartInfo.FileName = CMD_PATH;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardInput = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            //process.StartInfo.StandardInputEncoding = System.Text.Encoding.UTF8;
-            process.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
-            process.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.Verb = "runas";
-            process.Start();
-            process.StandardInput.WriteLine(cmd);
-            process.StandardInput.AutoFlush = true;
-
-            // Get output
-            output = process.StandardOutput.ReadToEnd();
-            if (doTrim)
-            {
-                int startIndex = output.IndexOf(cmd) + cmd.Length + 2;
-                output = output.Substring(startIndex);
-            }
-
-            process.WaitForExit();
-            process.Close();
-        }
-
+        // Async
         public static void RunAsync(string cmd)
         {
             Debug.WriteLine("Run: " + cmd);

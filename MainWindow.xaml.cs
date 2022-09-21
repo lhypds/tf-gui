@@ -50,6 +50,7 @@ namespace TfGuiTool
                 buttonUndoSelect.IsEnabled = isEnable;
                 buttonSettings.IsEnabled = isEnable;
                 buttonUndoAll.IsEnabled = isEnable;
+                buttonHistory.IsEnabled = isEnable;
             }));
         }
 
@@ -506,6 +507,36 @@ namespace TfGuiTool
             {
                 this.labelStatus.Text = status;
             }));
+        }
+
+        private void buttonHistory_Click(object sender, RoutedEventArgs e)
+        {
+            History();
+        }
+
+        private void History()
+        {
+            if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
+            Status("Get change history...");
+
+            IsEnableAllControls(false);
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                // Get pending file changes
+                string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " history "
+                    + SimpleConfigUtils.GetConfig("tfs_path") + " "
+                    + "/recursive "
+                    + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
+                CommandUtils.Run(cmd, out string output);
+                Debug.WriteLine(output);
+                File.WriteAllText("history.txt", output);
+                Status("History exported.");
+
+                IsEnableAllControls(true);
+                OpenFileWithDefaultEditor("history.txt");
+            }).Start();
         }
     }
 

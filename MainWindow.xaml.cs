@@ -71,6 +71,8 @@ namespace TfGuiTool
         private void listViewFiles_Drop(object sender, DragEventArgs e)
         {
             string[] filePathList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            List<FileItem> addedFileList = new List<FileItem>();
+
             foreach (var filePath in filePathList)
             {
                 if (!filePath.Contains(SimpleConfigUtils.GetConfig("project_path")))
@@ -81,11 +83,14 @@ namespace TfGuiTool
 
                 if (FileList.Find(f => f.Path == filePath) == null)
                 {
-                    FileList.Add(new FileItem()
+                    FileItem fileItem = new FileItem()
                     {
                         Name = System.IO.Path.GetFileName(filePath),
                         Path = filePath
-                    });
+                    };
+
+                    addedFileList.Add(fileItem);
+                    FileList.Add(fileItem);
                     Status("File(s) added.");
                 }
             }
@@ -96,7 +101,7 @@ namespace TfGuiTool
             {
                 if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
                 {
-                    Add();
+                    Add(addedFileList);
                 }
                 else
                 {
@@ -107,10 +112,10 @@ namespace TfGuiTool
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-            Add();
+            Add(FileList);
         }
 
-        private void Add()
+        private void Add(List<FileItem> fileList)
         {
             if (!SimpleConfigUtils.ConfigVerification()) { MessageBox.Show("Please check settings.", "Message"); return; }
             Status("Adding files...");
@@ -124,7 +129,7 @@ namespace TfGuiTool
 
                 int checkoutCounter = 0;
                 int failedCounter = 0;
-                foreach (var file in FileList)
+                foreach (var file in fileList)
                 {
                     string cmd = SimpleConfigUtils.GetConfig("tf_executable_path") + " add "
                         + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";

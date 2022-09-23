@@ -22,6 +22,8 @@ namespace TfGuiTool.Utils
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
+                StandardOutputEncoding = Encoding.UTF8,  // not working, still mojibake
+                StandardErrorEncoding = Encoding.UTF8,   // not working, still mojibake
                 CreateNoWindow = true,
                 Verb = "runas",
             };

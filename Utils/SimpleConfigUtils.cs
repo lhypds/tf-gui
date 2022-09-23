@@ -70,7 +70,7 @@ namespace TfGuiTool.Utils
                 configList.Add(configKey.ToString() + "," + configs[configKey.ToString()]);
             }
             configList.Sort();
-            File.WriteAllLines("config.txt", configList);
+            File.WriteAllLines("config.txt", configList, Encoding.UTF8);
         }
 
         public static void RemoveConfig(string key)
@@ -84,7 +84,7 @@ namespace TfGuiTool.Utils
                 configList.Add(configKey.ToString() + "," + configs[configKey.ToString()]);
             }
             configList.Sort();
-            File.WriteAllLines("config.txt", configList);
+            File.WriteAllLines("config.txt", configList, Encoding.UTF8);
         }
 
         public static bool ConfigVerification()

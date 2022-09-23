@@ -136,7 +136,7 @@ namespace TfGuiTool
                 configList.Add(configKey.ToString() + "," + configs[configKey.ToString()]);
             }
             configList.Sort();
-            File.WriteAllLines("config.txt", configList);
+            File.WriteAllLines("config.txt", configList, Encoding.UTF8);
             Close();
         }
     }

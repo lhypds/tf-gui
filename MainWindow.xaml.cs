@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,7 @@ namespace TfGuiTool
         public MainWindow()
         {
             InitializeComponent();
+            string text = CultureInfo.CurrentCulture.EnglishName;
             listViewFiles.ItemsSource = FileList;
             checkboxDragAndDropFileToCheckout.IsChecked = SimpleConfigUtils.GetConfig("drag_and_drop_to_checkout").Equals("true");
         }
@@ -480,7 +482,7 @@ namespace TfGuiTool
                     + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
                 CommandUtils.Run(cmd, out string output);
                 Debug.WriteLine(output);
-                File.WriteAllText("diff_result.diff", output);
+                File.WriteAllText("diff_result.diff", output, Encoding.UTF8);
                 Status("File diff exported.");
 
                 IsEnableAllControls(true);
@@ -536,7 +538,7 @@ namespace TfGuiTool
                     + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
                 CommandUtils.Run(cmd, out string output);
                 Debug.WriteLine(output);
-                File.WriteAllText("history.txt", output);
+                File.WriteAllText("history.txt", output, Encoding.UTF8);
                 Status("History exported.");
 
                 IsEnableAllControls(true);

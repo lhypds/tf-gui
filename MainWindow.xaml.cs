@@ -482,7 +482,7 @@ namespace TfGuiTool
                     + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
                 CommandUtils.Run(cmd, out string output);
                 Debug.WriteLine(output);
-                File.WriteAllText("diff_result.diff", output, Encoding.UTF8);
+                File.WriteAllText("diff_result.diff", output, CodePagesEncodingProvider.Instance.GetEncoding("shift_jis"));
                 Status("File diff exported.");
 
                 IsEnableAllControls(true);
@@ -538,7 +538,7 @@ namespace TfGuiTool
                     + "/login:" + SimpleConfigUtils.GetConfig("user_name") + "," + SimpleConfigUtils.GetConfig("password") + " ";
                 CommandUtils.Run(cmd, out string output);
                 Debug.WriteLine(output);
-                File.WriteAllText("history.txt", output, Encoding.UTF8);
+                File.WriteAllText("history.txt", output, CodePagesEncodingProvider.Instance.GetEncoding("shift_jis"));
                 Status("History exported.");
 
                 IsEnableAllControls(true);

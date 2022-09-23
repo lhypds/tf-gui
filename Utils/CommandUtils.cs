@@ -15,6 +15,7 @@ namespace TfGuiTool.Utils
 
         private static ProcessStartInfo StartInfoInit()
         {
+            
             ProcessStartInfo startInfo = new ProcessStartInfo()
             {
                 FileName = CMD_PATH,
@@ -22,8 +23,8 @@ namespace TfGuiTool.Utils
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
-                StandardOutputEncoding = Encoding.UTF8,  // not working, still mojibake
-                StandardErrorEncoding = Encoding.UTF8,   // not working, still mojibake
+                StandardOutputEncoding = CodePagesEncodingProvider.Instance.GetEncoding("shift_jis"),  // not working, still mojibake
+                StandardErrorEncoding = CodePagesEncodingProvider.Instance.GetEncoding("shift_jis"),   // not working, still mojibake
                 CreateNoWindow = true,
                 Verb = "runas",
             };

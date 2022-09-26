@@ -70,7 +70,7 @@ namespace TfGuiTool.Utils
                 configList.Add(configKey.ToString() + "," + configs[configKey.ToString()]);
             }
             configList.Sort();
-            File.WriteAllLines("config.txt", configList, CodePagesEncodingProvider.Instance.GetEncoding("shift_jis"));
+            File.WriteAllLines("config.txt", configList);
         }
 
         public static void RemoveConfig(string key)
@@ -84,7 +84,7 @@ namespace TfGuiTool.Utils
                 configList.Add(configKey.ToString() + "," + configs[configKey.ToString()]);
             }
             configList.Sort();
-            File.WriteAllLines("config.txt", configList, CodePagesEncodingProvider.Instance.GetEncoding("shift_jis"));
+            File.WriteAllLines("config.txt", configList);
         }
 
         public static bool ConfigVerification()

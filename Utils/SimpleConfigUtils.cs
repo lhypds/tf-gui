@@ -11,7 +11,7 @@ namespace TfGuiTool.Utils
     internal class SimpleConfigUtils
     {
         const string CONFIG = "config.txt";
-        const string SPLITER = ",";
+        const char SPLITER = ',';
         static readonly List<string> ConfigStrings = new List<string>
         {
             "tf_executable_path",

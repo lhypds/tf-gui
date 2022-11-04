@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TfGuiTool"
         xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System.Collections.Specialized" x:Class="TfGuiTool.MainWindow"
         mc:Ignorable="d"
-        Title="TF GUI Tool 1.0.0" Height="324" Width="510" Icon="/Resources/tfs.ico" Topmost="True" MinWidth="510" MinHeight="320">
+        Title="TF GUI Tool 1.0.0" Height="324" Width="510" Icon="/Resources/tfs.ico" Topmost="True" MinWidth="510" MinHeight="320" KeyUp="Window_KeyUp">
     <Grid>
         <Button x:Name="buttonSettings" Content="Settings" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="buttonSettings_Click" Height="27" Width="72"/>
         <ListView x:Name="listViewFiles" Margin="10,42,10,76" Drop="listViewFiles_Drop" AllowDrop="True" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="listViewFiles_MouseDoubleClick">

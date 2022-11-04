@@ -545,6 +545,14 @@ namespace TfGuiTool
                 OpenFileWithDefaultEditor("history.txt");
             }).Start();
         }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.W)
+            {
+                this.WindowState = WindowState.Minimized;
+            }
+        }
     }
 
     public class FileItem
